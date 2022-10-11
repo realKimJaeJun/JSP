@@ -6,11 +6,10 @@
 		<title>response</title>
 	</head>
 	<body>
-		<h3>response 처리 페이지</h3>
+		<h3>response 처리 페이지</h3>		
 	</body>
 </html>
 <%
 	// 해당 페이지를 파일 다운로드로 응답
-	response.setHeader("content-type", "application/octec-stream");
-
+	response.setHeader("Content-Type", "application/octet-stream");
 %>

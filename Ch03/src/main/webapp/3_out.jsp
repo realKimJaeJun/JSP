@@ -12,7 +12,7 @@
 			out 내장객체
 			 - JSP 출력객체
 			 - HTML 태그 및 데이터 출력
-		 -->
+		-->
 	</head>
 	<body>
 		<h3>out 객체</h3>
@@ -23,10 +23,7 @@
 			out.println("<li>대구</li>");
 			out.println("<li>부산</li>");
 			out.println("<li>광주</li>");
-			out.println("<ul/>");
-			
-		
-		
+			out.println("</ul>");
 		%>
 	</body>
 </html>

@@ -14,26 +14,25 @@
 			 - 클라이언트의 전송 데이터(Parameter)를 수신하는 기능 제공
 			 
 			Get Method(데이터 전송 방식)
-			 - 기본 데이터 전송방식
+			 - 기본 데이터 전송 방식
 			 - 서버에 정보를 요청하는 방식
 			 - 전송 데이터가 주소에 노출
-			 
+			
 			Post Method(데이터 전송 방식)
 			 - 서버에 데이터를 전송하면서 처리를 요청하는 전송방식
 			 - 전송 데이터가 요청 body에 삽입되어 전송, 데이터 노출 안됨
-		 -->
+		-->
 	</head>
 	<body>
 		<h3>request 내장객체</h3>
 		
-		<h4>사용자</h4>
+		<h4>사용자 입력</h4>
 		<form action="./proc/userProc.jsp" method="get">
 			<input type="text" name="uid" placeholder="아이디 입력"/><br/>
 			<input type="text" name="name" placeholder="이름 입력"/><br/>
 			<input type="number" name="age" placeholder="나이 입력"/><br/>
-			<input type="submit" value="전송하기"/>
+			<input type="submit" value="전송하기"/>		
 		</form>
-		
 		
 		<h4>회원가입</h4>
 		<form action="./proc/registerProc.jsp" method="post">
@@ -80,26 +79,28 @@
 						<label><input type="checkbox" name="hobby" value="독서"/>독서하기</label>
 						<label><input type="checkbox" name="hobby" value="여행"/>여행하기</label>
 						<label><input type="checkbox" name="hobby" value="운동"/>운동하기</label>
-						<label><input type="checkbox" name="hobby" value="게임"/>게임하기</label>
+						<label><input type="checkbox" name="hobby" value="게임"/>게임하기</label>					
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">
-					<input type="submit" value="회원가입"/>
+						<input type="submit" value="회원가입"/>
 					</td>
 				</tr>
 			</table>
 		</form>
 		
-		<h4>사용자 정보확인</h4>
+		<h4>사용자 정보 확인</h4>
 		<p>
 			헤더정보 : <%= request.getHeader("User-Agent") %><br/>
 			프로토콜 : <%= request.getProtocol() %><br/>
 			서버이름 : <%= request.getServerName() %><br/>
 			요청주소 : <%= request.getRequestURL() %><br/>
-			요청경료 : <%= request.getRequestURI() %><br/>
-			클라리언테 IP주소 : <%= request.getRemoteAddr() %><br/>
-		
+			요청경로 : <%= request.getRequestURI() %><br/>
+			클라이언트 IP주소 : <%= request.getRemoteAddr() %><br/>
 		</p>
 	</body>
 </html>
+
+
+

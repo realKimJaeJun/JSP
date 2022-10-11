@@ -15,17 +15,34 @@
 			 
 			redirect
 			 - Server에서 Client로 다시 요청을 명령하는 response의 기능
-			 - 최종 요청에 대한 주소가 반영 cf) forward는 최초 요청에 대한 주소 반영 
-		 -->
+			 - 최종 요청에 대한 주소가 반영 cf) forward는 최초 요청에 대한 주소 반영
+		-->
 	</head>
 	<body>
 		<h3>response 객체</h3>
 		
-		<a href="./proc/redirect1.jsp">>리다이렉트 페이지 요청1</a>
-		<a href="./proc/redirect2.jsp">>리다이렉트 페이지 요청2</a>
+		<a href="./proc/redirect1.jsp">리다이렉트 페이지 요청1</a>
+		<a href="./proc/redirect2.jsp">리다이렉트 페이지 요청2</a>
 		<a href="./proc/response.jsp">파일 전송 요청</a>
-		
-		
 		
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

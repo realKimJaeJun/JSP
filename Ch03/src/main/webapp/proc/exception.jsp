@@ -3,12 +3,17 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>redirect2</title>
+		<title>exception</title>
 	</head>
 	<body>
-		<h3>redirect2 페이지</h3>
+		<%
+			int num1 = 1;
+			int num2 = 0;
+			
+			int result = num1 / num2;
+		%>
+		
+		결과 : <%= result %>
+		
 	</body>
 </html>
-<%
-	response.sendRedirect("https://naver.com");
-%>

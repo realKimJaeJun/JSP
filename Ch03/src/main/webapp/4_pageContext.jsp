@@ -13,23 +13,23 @@
 			 - JSP 페이지에 1:1로 대응되는 객체, JSP 페이지 하나당 하나의 pageContext 객체 생성
 			 - 주요 기능은 페이지 흐름제어(include, forward) 기능 제공
 			 
-			 forward
-			  - 시스템내에서 페이지를 요청하는 pageContext 기능
-			  - 최초 요청에 대한 주소가 반영, cf) redirect는 최종 요청에 대한 주소가 반영
+			forward 
+			 - 시스템내에서 페이지를 요청하는 pageContext 기능
+			 - 최초 요청에 대한 주소가 반영, cf) redirect는 최종 요청에 대한 주소가 반영
 		 -->
 	</head>
 	<body>
 		<h3>pageContext 객체</h3>
 		
 		<h4>include</h4>
-		<%
+		<%			
 			pageContext.include("./inc/_header.jsp");
 			pageContext.include("./inc/_footer.jsp");
 		%>
 		
 		<h4>forward</h4>
 		<a href="./proc/forward1.jsp">포워드 페이지 요청1</a>
-		<a href="./proc/forward2.jsp">포워드 페이지 요청2</a>
+		<a href="./proc/forward2.jsp">포워드 페이지 요청2</a>		
 		
 	</body>
 </html>

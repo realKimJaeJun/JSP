@@ -6,7 +6,7 @@
 		<title>forward1</title>
 	</head>
 	<body>
-		<h3>forward1</h3>
+		<h3>forward1 페이지</h3>
 	</body>
 </html>
 <%
