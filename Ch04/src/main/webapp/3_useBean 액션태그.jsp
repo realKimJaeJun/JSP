@@ -16,9 +16,9 @@
 		<h4>사용자 입력</h4>
 		<form action="./proc/addPerson.jsp">
 			<input type="text" name="name" placeholder="이름 입력"><br/>
-			<input type="number" name="age" placeholder="이름 입력"><br/>
-			<input type="text" name="hp" placeholder="이름 입력"><br/>
-			<input type="text" name="addr" placeholder="이름 입력"><br/>
+			<input type="number" name="age" placeholder="나이 입력"><br/>
+			<input type="text" name="hp" placeholder="휴대폰 입력"><br/>
+			<input type="text" name="addr" placeholder="주소 입력"><br/>
 			<input type="submit" value="등록하기"/>
 		</form>
 	</body>
