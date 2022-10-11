@@ -9,7 +9,7 @@
 	//String addr = request.getParameter("addr");
 %>
 
-
+<!-- Bean을 활용해서 데이터 수신 -->
 <jsp:useBean id="pb" class="bean.PersonBean">
 	<jsp:setProperty property="name" name="pb"/>
 	<jsp:setProperty property="age" name="pb"/>
