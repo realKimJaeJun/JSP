@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 데이터베이스 작업
-	List<StudentBean> students = null;
+	List<StudentBean> students = new ArrayList<>();
 	
 	try{
 		Connection conn = DB.getInstance().getConnection();
@@ -63,8 +63,8 @@
 				<td><%= sb.getStdyear() %></td>
 				<td><%= sb.getStdaddress() %></td>
 				<td>
-					<a href="./modify.jsp?uid=<%= sb.getStdno() %>">수정</a>
-					<a href="./delete.jsp?uid=<%= sb.getStdno() %>">삭제</a>
+					<a href="./modify.jsp?stdno=<%= sb.getStdno() %>">수정</a>
+					<a href="./delete.jsp?stdno=<%= sb.getStdno() %>">삭제</a>
 				</td>
 			</tr>
 			<% } %>
