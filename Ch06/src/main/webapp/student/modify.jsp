@@ -1,11 +1,13 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="bean.StudentBean"%>
-<%@page import="config.DB"%>
+<%@page import="config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
+
+
 	request.setCharacterEncoding("utf-8");
 
 	String stdno = request.getParameter("stdno");
@@ -13,7 +15,7 @@
 	StudentBean sb = null;
 	
 	try{
-		Connection conn = DB.getInstance().getConnection();
+		Connection conn = DBCP.getConnection();
 		
 		String sql = "SELECT * FROM `student` WHERE `stdno`=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
@@ -22,12 +24,12 @@
 		ResultSet rs = psmt.executeQuery();
 		
 		if(rs.next()){
-			sb = new StudentBean();
-			sb.setStdno(rs.getString(1));
-			sb.setStdname(rs.getString(2));
-			sb.setStdhp(rs.getString(3));
-			sb.setStdyear(rs.getInt(4));
-			sb.setStdaddress(rs.getString(5));
+	sb = new StudentBean();
+	sb.setStdno(rs.getString(1));
+	sb.setStdname(rs.getString(2));
+	sb.setStdhp(rs.getString(3));
+	sb.setStdyear(rs.getInt(4));
+	sb.setStdaddress(rs.getString(5));
 		}
 		
 		rs.close();
@@ -38,7 +40,6 @@
 	}catch(Exception e){
 		e.printStackTrace();
 	}
-	
 %>
 
 <!DOCTYPE html>

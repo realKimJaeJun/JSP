@@ -1,14 +1,14 @@
+<%@page import="config.DBCP"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.User5Bean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="config.DBCP"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 
-	List<User5Bean> users = new ArrayList<>();
+List<User5Bean> users = new ArrayList<>();
 
 	try{
 		Connection conn = DBCP.getConnection();
@@ -16,16 +16,16 @@
 		ResultSet rs = stmt.executeQuery("select * from `user5`");
 		
 		while(rs.next()){
-			User5Bean ub = new User5Bean();
-			ub.setUid(rs.getString(1));
-			ub.setName(rs.getString(2));
-			ub.setBirth(rs.getString(3));
-			ub.setGender(rs.getInt(4));
-			ub.setAge(rs.getInt(5));
-			ub.setAddr(rs.getString(6));
-			ub.setHp(rs.getString(7));
-			
-			users.add(ub);
+	User5Bean ub = new User5Bean();
+	ub.setUid(rs.getString(1));
+	ub.setName(rs.getString(2));
+	ub.setBirth(rs.getString(3));
+	ub.setGender(rs.getInt(4));
+	ub.setAge(rs.getInt(5));
+	ub.setAddr(rs.getString(6));
+	ub.setHp(rs.getString(7));
+	
+	users.add(ub);
 		}
 
 		rs.close();

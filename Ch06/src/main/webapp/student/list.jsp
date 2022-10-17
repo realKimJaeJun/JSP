@@ -3,28 +3,32 @@
 <%@page import="bean.StudentBean"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="config.DB"%>
+<%@page import="config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+
+
+
+
 	// 데이터베이스 작업
 	List<StudentBean> students = new ArrayList<>();
 	
 	try{
-		Connection conn = DB.getInstance().getConnection();
+		Connection conn = DBCP.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM `student`");
 		
 		students = new ArrayList<>();
 		while(rs.next()){
-			StudentBean sb = new StudentBean();
-			sb.setStdno(rs.getString(1));
-			sb.setStdname(rs.getString(2));
-			sb.setStdhp(rs.getString(3));
-			sb.setStdyear(rs.getInt(4));
-			sb.setStdaddress(rs.getString(5));
-			
-			students.add(sb);
+	StudentBean sb = new StudentBean();
+	sb.setStdno(rs.getString(1));
+	sb.setStdname(rs.getString(2));
+	sb.setStdhp(rs.getString(3));
+	sb.setStdyear(rs.getInt(4));
+	sb.setStdaddress(rs.getString(5));
+	
+	students.add(sb);
 		}
 		
 		stmt.close();
@@ -34,7 +38,6 @@
 	}catch(Exception e){
 		e.printStackTrace();
 	}
-	
 %>
 <!DOCTYPE html>
 <html>
