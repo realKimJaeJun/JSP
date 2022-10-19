@@ -61,8 +61,8 @@
             </table>
 
             <div>
-                <a href="/Jboard1/login.jsp" class="btn btnCancel">취소</a>
-                <a href="/Jboard1/list.jsp" type="submit" class="btn btnRegister">회원가입</a>
+                <a href="/Jboard1/user/login.jsp" class="btn btnCancel">취소</a>
+                <a href="/Jboard1/user/list.jsp" type="submit" class="btn btnRegister">회원가입</a>
             </div>
 
         </form>
