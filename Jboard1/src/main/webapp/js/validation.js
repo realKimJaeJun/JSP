@@ -216,6 +216,10 @@
 				alert("휴대폰이 유효하지 않습니다.");
 				return false;
 			}
+			function inputIdChk(){            
+			document.userInfo.idDuplication.value ="idUncheck";
+			}
+
 			
 			
 			return true;

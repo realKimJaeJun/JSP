@@ -10,6 +10,7 @@
 	String uid = request.getParameter("uid");
 	
 	// 데이터베이스 처리
+	
 	int result = 0;
 	try{
 		Connection conn = DBCP.getConnection();

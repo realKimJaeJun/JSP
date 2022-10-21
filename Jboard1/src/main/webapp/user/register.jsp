@@ -5,6 +5,12 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/Jboard1/js/zipcode.js"></script>
 
+<!-- 	onkeydown="inputIdChk()"
+		중복체크를 하고 난 뒤 아이디 입력란에 사용 가능한 아이디를 지우고 새로운 아이디를 입력했을 경우에 대처
+		
+		"idUncheck"
+		아이디 중복체크 여부 판단
+ -->
 <main id="user">
     <section class="register">
 
@@ -13,9 +19,10 @@
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
                     <td>아이디</td>
-                    <td>
-                        <input type="text" name="uid" placeholder="아이디 입력"/>
+                    <td>						
+                        <input type="text" name="uid" onkeydown="inputIdChk()" placeholder="아이디 입력"/>
                         <button type="button" id="btnIdCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
+                        <input type="hidden" name="idDuplication" value="idUncheck">
                         <span class="uidResult"></span>
                     </td>
                 </tr>
