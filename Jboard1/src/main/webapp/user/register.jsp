@@ -1,122 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 
-<script>
-	// 데이터 검증에 사용하는 정규표현식
-	let reUid 	= /^[a-z]+[a-z0-9]{5,19}$/g; 
-	let rePass 	= /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
-	let reName 	= /^[가-힣]+$/;
-	let reNick 	= /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
-	let reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-	let reHp = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
-	
-	// 폼 데이터 검증 결과 상태변수
-	let isUidOk = false;
-	let isPassOk = false;
-	let isNameOk = false;
-	let isNickOk = false;
-	let isEmailOk = false;
-	let isHpOk = false;
+<script src="/Jboard1/js/validation.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Jboard1/js/zipcode.js"></script>
 
-	$(function () {
-		
-		// 아이디 검사하기
-		$('input[name=uid]').focusout(function() {
-			
-			let value = $(this).val();
-			
-			if(reUid.test(value)){
-				isUidOk = true;
-				$('.uidResult').css('color', 'green').text('사용하실 수 있는 아이디 입니다.');
-			}else{
-				isUidOk = false;
-				$('.uidResult').css('color', 'red').text('유효한 아이디가 아닙니다.');
-			}
-		});
-		
-		
-		// 비밀번호 검사하기
-		$('input[name=pass2]').focusout(function() {
-			
-			let pass1 = $('input[name=pass1]').val();
-			let pass2 = $('input[name=pass2]').val();
-			
-			if(rePass.test(pass2)){
-				
-				if(pass1 == pass2){
-					isPassOk = true;
-					$('.passResult').css('color', 'green').text("사용할 수 있는 비밀번호입니다.");
-				}else{
-					isPassOk = false;
-					$('.passResult').css('color', 'red').text("비밀번호가 일치하지 않습니다.");
-				}
-				
-			}else{
-				$('.passResult').css('color', 'red').text(" 숫자, 영문, 특수문자 포함 5자리 이상이어야 합니다.");
-			}
-			
-		});
-		
-		// 이름 검사하기
-		$('input[name=name]').focusout(function() {
-			
-			let name = $(this).val();
-			
-			if(reName.test(name)){
-				isNameOk = true;
-				$('.nameResult').text('');
-			}else{
-				isNameOk = false;
-				$('.nameResult').css('color', 'red').text("유효한 이름이 아닙니다.");
-			}
-		});
-		// 별명 검사하기
-		
-		// 이메일 검사하기
-		
-		// 휴대폰 검사하기
-		
-		
-		// 최종 폼 전송 할 때
-		$('.register > form').submit(function() {
-			
-			// 아이디 검증
-			if(!isUidOk){
-				alert("아이디가 유효하지 않습니다.");
-				return false;
-			}
-			// 비밀번호 검증
-			if(!isPassOk){
-				alert("비밀번호가 유효하지 않습니다.");
-				return false;
-			}
-			// 이름 검증
-			if(!isNameOk){
-				alert("이름이 유효하지 않습니다.");
-				return false;
-			}
-			// 별명 검증
-			if(!isNickOk){
-				alert("별명이 유효하지 않습니다.");
-				return false;
-			}
-			// 이메일 검증
-			if(!isEmailOk){
-				alert("이메일이 유효하지 않습니다.");
-				return false;
-			}
-			// 휴대폰 검증
-			if(!isHpOk){
-				alert("휴대폰이 유효하지 않습니다.");
-				return false;
-			}
-			
-			
-			return true;
-		});
-	});
-	
-</script>
 <main id="user">
     <section class="register">
 
@@ -127,7 +15,7 @@
                     <td>아이디</td>
                     <td>
                         <input type="text" name="uid" placeholder="아이디 입력"/>
-                        <button type="button"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
+                        <button type="button" id="btnIdCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
                         <span class="uidResult"></span>
                     </td>
                 </tr>
@@ -157,25 +45,29 @@
                     <td>
                         <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
                         <input type="text" name="nick" placeholder="별명 입력"/>
-                        <button type="button"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
+                        <button type="button" id="btnNickCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
                         <span class="nickResult"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>이메일</td>
-                    <td><input type="email" name="email" placeholder="이메일 입력"/></td>
+                    <td><input type="email" name="email" placeholder="이메일 입력"/>
+                    <span class="emailResult"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
-                    <td><input type="text" name="hp" placeholder="휴대폰 입력"/></td>
+                    <td><input type="text" name="hp" placeholder="휴대폰 입력"/>
+                    <span class="hpResult"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td>주소</td>
                     <td>
-                        <input type="text" name="zip" placeholder="우편번호"/>
-                        <button type="button"><img src="/Jboard1/img/chk_post.gif" alt="우편번호찾기"/></button>
-                        <input type="text" name="addr1" placeholder="주소 검색"/>
-                        <input type="text" name="addr2" placeholder="상세주소 입력"/>
+                        <input type="text" name="zip" id="zip" placeholder="우편번호" readonly="readonly"/>
+                        <button type="button" onclick="zipcode()"><img src="/Jboard1/img/chk_post.gif" alt="우편번호찾기"/></button>
+                        <input type="text" name="addr1" id="addr1" placeholder="주소 검색"/>
+                        <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
                     </td>
                 </tr>
             </table>
