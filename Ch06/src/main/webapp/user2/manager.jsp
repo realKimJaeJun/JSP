@@ -56,14 +56,83 @@
 							}else{
 								alert('입력 실패! 아이디가 중복 되었습니다.');
 							}
-								
+							list(); // 목록 화면전환
 						}
 					});
 					
 				});
 				
+				// user2 수정화면
+				$(document).on('click', '.userModify', function (e) {
+					e.preventDefault();
+					
+					// 수정 하기 전의 데이터 값을 입력 해놓기위한 용도로
+					// 수정 버튼을 누른 행의 uid, name, hp, age값이 들어있는 td태그를 저장한다.
+					let user = $(this).parent().parent().children('td'); // a -> td(관리 컬럼) -> tr -> td(아이디, 이름, 휴대폰, 나이, 관리)
+					
+					modify(user); // 파라미터로 user변수를 보낸다.
+				});
 				
+				// user2 수정하기
+				$(document).on('click', '#btnModify', function() {
+					// 데이터 가져오기
+					let uid = $('input[name=uid]').val();
+					let name = $('input[name=name]').val();
+					let hp = $('input[name=hp]').val();
+					let age = $('input[name=age]').val();
+					
+					// JSON 데이터로 변환
+					let jsonData = {
+							"uid":uid,
+							"name":name,
+							"hp":hp,
+							"age":age
+					}
+					
+					$.ajax({
+						url:"./data/modify.jsp",
+						type: 'post',
+						data: jsonData,
+						dataType: 'json',
+						success: function (data) {
+							if(data.result == 1){
+								alert('수정성공!');
+							} else {
+								alert('수정실패!');
+							}
+							list(); // 목록 화면전환.
+						}
+					})
+					
+				});
+				
+				// user2 삭제하기
+				$(document).on('click', '.userDelete',  function() {
+					
+					// 데이터 가져오기
+					let uid = $(this).parent().parent().children('td:eq(0)').text();
+					
+					// JSON 데이터 변환
+					let jsonData = {
+							"uid":uid
+					}
+					
+					$.ajax({
+						url:'./data/delete.jsp',
+						type: 'post',
+						dataType: 'json',
+						data:jsonData,
+						success: function (data) {
+							if(data.result == 1){
+								alert('삭제 성공');
+							} else {
+								alert('삭제 실패');
+							}
+						}
+				});
 			});
+				
+		});
 		
 		</script>
 		

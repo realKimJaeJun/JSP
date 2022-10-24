@@ -31,8 +31,8 @@ function list(){
 					tr += "<td>"+user.hp+"</td>";
 					tr += "<td>"+user.age+"</td>";
 					tr += "<td>";
-					tr += "<a href='#'>수정</a>";
-					tr += "<a href='#'>삭제</a>";
+					tr += "<a href='#' class='userModify'>수정</a>";
+					tr += "<a href='#' class='userDelete'>삭제</a>";
 					tr += "</td>";
 					tr += "</tr>";
 				

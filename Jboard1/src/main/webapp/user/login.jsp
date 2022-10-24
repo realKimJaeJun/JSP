@@ -1,8 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("utf-8");
+	String success = request.getParameter("success");
+%>
 <%@ include file="./_header.jsp" %>
+<script>
+	let success = "<%= success %>";
+	
+	if(success == "100"){
+		alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인하세요.');
+	}else if(success == "101"){
+		alert('로그인이 필요합니다.');
+	}
+	
+	<%
+	Cookie[] c = request.getCookies();
+	if (c != null) {
+		for (Cookie cf : c) {
+			if (cf.getName().equals("uid")) {
+				response.sendRedirect("list.jsp");
+			}
+		}
+	}
+	%>
+</script>
+
 <main id="user">
     <section class="login">
-        <form action="/Jboard1/list.jsp">
+        <form action="/Jboard1/user/proc/loginProc.jsp" method="post">
             <table border="0">
                 <tr>
                     <td><img src="/Jboard1/img/login_ico_id.png" alt="아이디"/></td>
@@ -24,4 +49,4 @@
         </div>
     </section>
 </main>
-<%@ include file="./_footer.jsp" %>        
+<jsp:include page="./_footer.jsp"/> 
