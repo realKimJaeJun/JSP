@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 		request.setCharacterEncoding("utf-8");
-		String custId = request.getParameter("custId");
+		String prodId = request.getParameter("prodId");
 		String name = request.getParameter("name");
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
@@ -18,9 +18,9 @@
 		DataSource ds = (DataSource)ctx.lookup("dbcp_java2_bookstore"); 
 		Connection conn = ds.getConnection(); 
 		
-		String sql = "INSERT INTO `customer` VALUES (?,?,?,?)";
+		String sql = "INSERT INTO `prodomer` VALUES (?,?,?,?)";
 		PreparedStatement psmt = conn.prepareStatement(sql);
-		psmt.setString(1, custId);
+		psmt.setString(1, prodId);
 		psmt.setString(2, name);
 		psmt.setString(3, address);
 		psmt.setString(4, phone);

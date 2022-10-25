@@ -12,16 +12,16 @@
 	try{
 		Connection conn = DBCP.getConnection();
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("select * from `customer`");
+		ResultSet rs = stmt.executeQuery("select * from `prodomer`");
 		
 		while(rs.next()){
-		CustBean cb = new CustBean();
-		cb.setCustId(rs.getInt(1));
-		cb.setName(rs.getString(2));
-		cb.setAddress(rs.getString(3));
-		cb.setPhone(rs.getString(4));
+		CustBean ub = new CustBean();
+		ub.setCustId(rs.getInt(1));
+		ub.setName(rs.getString(2));
+		ub.setAddress(rs.getString(3));
+		ub.setPhone(rs.getString(4));
 	
-		custs.add(cb);
+		custs.add(ub);
 		}
 
 		rs.close();
@@ -51,15 +51,15 @@
 				<th>휴대폰</th>
 				<th>관리</th>
 			</tr>
-			<% for(CustBean cb : custs){ %>
+			<% for(CustBean ub : custs){ %>
 			<tr>
-				<td><%= cb.getCustId() %></td>
-				<td><%= cb.getName() %></td>
-				<td><%= cb.getAddress() %></td>
-				<td><%= cb.getPhone() %></td>
+				<td><%= ub.getCustId() %></td>
+				<td><%= ub.getName() %></td>
+				<td><%= ub.getAddress() %></td>
+				<td><%= ub.getPhone() %></td>
 				<td>
-					<a href="./modify.jsp?custId=<%= cb.getCustId() %>">수정</a>
-					<a href="./delete.jsp?custId=<%= cb.getCustId() %>">삭제</a>
+					<a href="./modify.jsp?custId=<%= ub.getCustId() %>">수정</a>
+					<a href="./delete.jsp?custId=<%= ub.getCustId() %>">삭제</a>
 				</td>
 			</tr>
 			<% } %>

@@ -5,14 +5,14 @@
 
 <%
 	request.setCharacterEncoding("utf-8");
-	String custId = request.getParameter("custId");
+	String prodId = request.getParameter("prodId");
 	
 	try{
 		Connection conn = DBCP.getConnection();
 		
-		String sql = "DELETE FROM `customer` WHERE `custId`=?";
+		String sql = "DELETE FROM `prodomer` WHERE `prodId`=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
-		psmt.setString(1, custId);
+		psmt.setString(1, prodId);
 		psmt.executeUpdate();
 		
 		psmt.close();

@@ -6,24 +6,24 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 		request.setCharacterEncoding("utf-8");
-			String custId = request.getParameter("custId");
-			CustBean cb = null;
+			String CustId = request.getParameter("custId");
+			CustBean ub = null;
 	
 	try{
 		Connection conn = DBCP.getConnection();
 		
-		String sql = "SELECT * FROM `customer` WHERE `custId`=?";
+		String sql = "SELECT * FROM `prodomer` WHERE `custId`=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
-		psmt.setString(1, custId);
+		psmt.setString(1, CustId);
 		ResultSet rs = psmt.executeQuery();
 		
-		cb = new CustBean();
+		ub = new CustBean();
 		if(rs.next()){
 			
-			cb.setCustId(rs.getInt(1));
-			cb.setName(rs.getString(2));
-			cb.setAddress(rs.getString(3));
-			cb.setPhone(rs.getString(4));
+			ub.setCustId(rs.getInt(1));
+			ub.setName(rs.getString(2));
+			ub.setAddress(rs.getString(3));
+			ub.setPhone(rs.getString(4));
 			
 		}
 		
@@ -51,15 +51,15 @@
 			<table border="1">
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" value="<%= cb.getName() %>"/></td>
+					<td><input type="text" name="name" value="<%= ub.getName() %>"/></td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="address" value="<%= cb.getAddress() %>"/></td>
+					<td><input type="text" name="address" value="<%= ub.getAddress() %>"/></td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="phone" value="<%= cb.getPhone() %>"/></td>
+					<td><input type="text" name="phone" value="<%= ub.getPhone() %>"/></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right"><input type="submit" value="수정"/></td>
