@@ -16,8 +16,26 @@
     <link rel="stylesheet" href="./css/style.css"/>    
 </head>
 <body>
+<%
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null){
+		for(Cookie tempCookie : cookies){
+			if(tempCookie.getName().equals("uid")){
+				// 쿠키값으로 자동 로그인
+				String ids = tempCookie.getValue();
+				session.setAttribute("uid", ids);
+			}
+		}
+	}
+%>
+	<%
+		// object타입이라 캐스팅 해야함 
+		String uid = (String)session.getAttribute("uid");
+	%>
+	
     <div id="wrapper">
         <header>
+        
             <h3>Board System v1.0</h3>
             <p>
                 <span><%= ub.getNick() %></span>님 반갑습니다.

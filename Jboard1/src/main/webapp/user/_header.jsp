@@ -8,6 +8,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
+<%
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (Cookie tempCookie : cookies) {
+			if (tempCookie.getName().equals("uid")) {
+				response.sendRedirect("/Jboard1/list.jsp");
+			}
+		}
+	}
+%>
     <div id="wrapper">
         <header>
             <h3>Board System v1.0</h3>
