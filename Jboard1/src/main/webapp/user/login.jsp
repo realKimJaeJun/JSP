@@ -27,7 +27,6 @@
                     <td><input type="password" name="pass" placeholder="비밀번호 입력"/></td>
                 </tr>
             </table>
-            <input type="checkbox" name="loginChk" value="true">자동 로그인<br/>
             <input type="submit" value="로그인" class="btnLogin"/>
         </form>
         <div>

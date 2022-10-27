@@ -8,6 +8,10 @@ public class OrdBean {
 	private int orderCount;
 	private String orderDate;
 	
+	private String name;
+	private String prodName;
+	
+	
 	public int getOrderNo() {
 		return orderNo;
 	}
@@ -37,5 +41,18 @@ public class OrdBean {
 	}
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getProdName() {
+		return prodName;
+	}
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
 	}
 }

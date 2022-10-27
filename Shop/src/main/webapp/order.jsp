@@ -19,8 +19,8 @@
 		while(rs.next()){
 		OrdBean ob = new OrdBean();
 		ob.setOrderNo(rs.getInt(1));
-		ob.setOrderId(rs.getString(2));
-		ob.setProductName(rs.getString(3));
+		ob.setName(rs.getString(2));
+		ob.setProdName(rs.getString(3));
 		ob.setOrderCount(rs.getInt(4));
 		ob.setOrderDate(rs.getString(5));
 	
@@ -59,8 +59,8 @@
 			<% for(OrdBean ob : ords){ %>
 			<tr>
 				<td><%= ob.getOrderNo() %></td>
-				<td><%= ob.getOrderId() %></td>
-				<td><%= ob.getProductName() %></td>
+				<td><%= ob.getName() %></td>
+				<td><%= ob.getProdName() %></td>
 				<td><%= ob.getOrderCount() %></td>
 				<td><%= ob.getOrderDate() %></td>
 			</tr>

@@ -31,11 +31,18 @@ public class Sql {
 												+ "`rdate`=NOW()";
 	
 	public static final String INSERT_FILE = "insert into `board_file` set "
-											+"`parent`=?,"
-											+"`newName`=?,"
-											+"`oriName`=?";
+											+ "`parent`=?,"
+											+ "`newName`=?,"
+											+ "`oriName`=?";
+	
+	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";
 
-	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) from `board_article`";
+	public static final String SELECT_ARTICLES = "SELECT a.*, b.nick FROM `board_article` AS a "
+												+ "JOIN `board_user` AS b "
+												+ "ON a.uid = b.uid "
+												+ "ORDER BY `no` DESC "
+												+ "LIMIT ?, 10";
 	
 	
 }

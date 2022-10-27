@@ -7,9 +7,10 @@ public class SQL {
 		
 		
 		// order
-		public static final String SELECT_ORDER = "SELECT o.orderNo, c.name, p.prodName, o.orderCount, o.orderDate"
-												+ "from `customer` AS c INNER JOIN `order` AS o ON c.custId = o.orderId"
-												+ "INNER JOIN `product` AS p ON o.orderProduct = p.prodNo ORDER BY `orderNo` ASC";
+		public static final String SELECT_ORDER = "SELECT a.orderNo, b.name, c.prodName, a.orderCount, a.orderDate"
+												+ "FROM `order` AS a JOIN `customer` AS b ON a.orderId = b.custId"
+												+ "JOIN `product` AS c ON a.orderProduct = c.prodNo";
+		
 		public static final String INSERT_ORDER = "insert into `order` values(?,?,?,now())";
 													
 		

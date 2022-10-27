@@ -11,8 +11,6 @@ request.setCharacterEncoding("utf-8");
 	String uid = request.getParameter("uid");
 	String pass = request.getParameter("pass");
 	
-	String loginChk = request.getParameter("loginChk");
-	
 	UserBean ub = null;
 	
 	try{
@@ -53,15 +51,6 @@ request.setCharacterEncoding("utf-8");
 	if(ub != null){
 		// 회원이 맞을 경우
 		session.setAttribute("sessUser", ub);
-		
-		// 로그인 유지 처리
-		if(loginChk != null){
-			Cookie cookie = new Cookie("uid", uid);
-			cookie.setMaxAge(60 * 2);
-			cookie.setPath("/");
-			response.addCookie(cookie);
-		}
-		
 		response.sendRedirect("/Jboard1/list.jsp");
 	}else{
 		// 회원이 아닐 경우
