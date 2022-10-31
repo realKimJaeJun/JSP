@@ -3,7 +3,7 @@ package kr.co.jboard1.db;
 public class Sql {
 
 	// user
-	public static final String INSERT_USER = "insert into `board_user` set "
+	public static final String INSERT_USER = "INSERT INTO `board_user` SET "
 											+ "`uid`=?,"
 											+ "`pass`=SHA2(?, 256),"
 											+ "`name`=?,"
@@ -16,13 +16,13 @@ public class Sql {
 											+ "`regip`=?,"
 											+ "`rdate`=NOW()";
 	
-	public static final String SELECT_TERMS = "select * from `board_terms`";
-	public static final String SELECT_USER  = "select * from `board_user` where `uid`=? and `pass`=SHA2(?, 256)";
-	public static final String SELECT_COUNT_UID = "select count(`uid`) from `board_user` where `uid`=?";
-	public static final String SELECT_COUNT_NICK = "select count(`nick`) from `board_user` where `nick`=?";
+	public static final String SELECT_TERMS = "SELECT * FROM `board_terms`";
+	public static final String SELECT_USER  = "SELECT * FROM `board_user` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
+	public static final String SELECT_COUNT_UID = "SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=?";
+	public static final String SELECT_COUNT_NICK = "SELECT COUNT(`nick`) FROM `board_user` WHERE `nick`=?";
 		
 	// board
-	public static final String INSERT_ARTICLE = "insert into `board_article` set "
+	public static final String INSERT_ARTICLE = "INSERT INTO `board_article` SET "
 												+ "`title`=?,"
 												+ "`content`=?,"
 												+ "`file`=?,"
@@ -30,12 +30,12 @@ public class Sql {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 		
-	public static final String INSERT_FILE = "insert into `board_file` set "
+	public static final String INSERT_FILE = "INSERT INTO `board_file` SET "
 											+ "`parent`=?,"
 											+ "`newName`=?,"
 											+ "`oriName`=?";
 	
-	public static final String INSERT_COMMENT = "insert into `board_article` set "
+	public static final String INSERT_COMMENT = "INSERT INTO `board_article` SET "
 												+ "`parent`=?,"
 												+ "`content`=?,"
 												+ "`uid`=?,"
@@ -59,7 +59,7 @@ public class Sql {
 												+ "ON a.`no` = b.`parent` "
 												+ "WHERE `no`=?";
 	
-	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
+	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "
 												+ "JOIN `board_user` AS b "
@@ -71,7 +71,7 @@ public class Sql {
 														+ "WHERE `parent`!=0 ORDER BY `no` DESC LIMIT 1";    
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
-	public static final String UPDATE_FILE_DOWNLOAD = "update `board_file` set `download` = `download` + 1 where `fno`=?";
+	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download` + 1 WHERE `fno`=?";
 	
 }
 
