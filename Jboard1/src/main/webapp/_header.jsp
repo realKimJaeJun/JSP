@@ -23,6 +23,6 @@
             <h3>Board System v1.0</h3>
             <p>
                 <span><%= ub.getNick() %></span>님 반갑습니다.
-                <a href="/Jboard1/user/proc/logout.jsp">[로그아웃]</a>
+                <a href="/Jboard1/user/login.jsp">[로그아웃]</a>
             </p>
         </header>

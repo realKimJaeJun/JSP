@@ -7,6 +7,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="kr.co.jboard1.db.DBCP"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
+<% pageContext.setAttribute("replaceChar", "\n");%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String no 	   = request.getParameter("no");
@@ -24,6 +25,7 @@
 	
 	JsonObject json = new JsonObject();
 	json.addProperty("result", 1);
+	json.addProperty("no", article.getNo());
 	json.addProperty("nick", article.getNick());
 	json.addProperty("date", article.getRdate());
 	json.addProperty("content", article.getContent());
