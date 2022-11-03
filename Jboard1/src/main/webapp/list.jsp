@@ -1,4 +1,3 @@
-<%@page import="java.util.Currency"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -9,9 +8,8 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="kr.co.jboard1.db.DBCP"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%
-	request.setCharacterEncoding("utf-8");
+	request.setCharacterEncoding("UTF-8");
 	String pg = request.getParameter("pg");
 	
 	// 게시물 목록 처리 관련 변수 선언
@@ -41,12 +39,13 @@
  	if(pg != null){
  		currentPage = Integer.parseInt(pg);
  	}
-	limitStart = (currentPage - 1) * 10; 	
+ 	
+	limitStart = (currentPage - 1) * 10;
  	
 	// 페이지 그룹 계산
 	pageGroupCurrent = (int)Math.ceil(currentPage / 10.0);
 	pageGroupStart = (pageGroupCurrent - 1) * 10 + 1;
-	pageGroupEnd = (pageGroupCurrent * 10);
+	pageGroupEnd = pageGroupCurrent * 10;
 	
 	if(pageGroupEnd > lastPageNum){
 		pageGroupEnd = lastPageNum;
@@ -55,7 +54,7 @@
 	// 페이지 시작 번호 계산
 	pageStartNum = total - limitStart;
 	
-	// 현재 페이지 게시물 가져오기
+ 	// 현재 페이지 게시물 가져오기
  	List<ArticleBean> articles = dao.selectArticles(limitStart);
 	
 %>
@@ -70,8 +69,8 @@
                 <th>글쓴이</th>
                 <th>날짜</th>
                 <th>조회</th>
-            </tr>      
-            <% for(ArticleBean article : articles){%>              
+            </tr>
+            <% for(ArticleBean article : articles){ %>
             <tr>
                 <td><%= pageStartNum-- %></td>
                 <td><a href="/Jboard1/view.jsp?no=<%= article.getNo() %>&pg=<%= currentPage %>"><%= article.getTitle() %>[<%= article.getComment() %>]</a></td>

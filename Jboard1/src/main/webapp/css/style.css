@@ -116,10 +116,6 @@ footer > p {
     height: auto;            
     margin: 60px auto;
 }
-#user > .terms > p {
-    float: right;
-    margin-top: 10px;
-}
 #user > .terms > table {
     width: 100%;
     height: auto;
@@ -151,7 +147,10 @@ footer > p {
 #user > .terms > table tr > td > label {float: right;}
 #user > .terms > table tr > td > label > input[type=checkbox] {}
 
-
+#user > .terms > div {
+    float: right;
+    margin-top: 10px;
+}
 
 /* 회원가입 */
 #user > .register {
@@ -384,10 +383,10 @@ footer > p {
 #board > .view > .commentList > article {overflow: hidden;}        
 #board > .view > .commentList .nick {}
 #board > .view > .commentList .date {}
-#board > .view > .commentList .content {
+#board > .view > .commentList .content {	
 	padding: 10px;
 	white-space: pre-wrap;
-	}
+}
 #board > .view > .commentList > article > div {float: right;}
 #board > .view > .commentList > article .remove {}
 #board > .view > .commentList > article .modify {}
@@ -467,7 +466,7 @@ footer > p {
 }
 .btnCancel {}
 .btnNext { background: #e9e9e9; }
-.btnRegister {background: #e9e9e9;}
+.btnRegister {}
 .btnWrite {
     position: absolute;
     right: 0;

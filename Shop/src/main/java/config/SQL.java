@@ -11,7 +11,8 @@ public class SQL {
 												+ "FROM `order` AS a JOIN `customer` AS b ON a.orderId = b.custId"
 												+ "JOIN `product` AS c ON a.orderProduct = c.prodNo";
 		
-		public static final String INSERT_ORDER = "insert into `order` values(?,?,?,now())";
+		public static final String INSERT_ORDER = "insert into `order` (`orderId`, `orderProduct`, `orderCount`, `orderDate`) "
+												+ "values (?,?,?,NOW())";
 													
 		
 		// product

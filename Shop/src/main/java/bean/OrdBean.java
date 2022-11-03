@@ -12,7 +12,7 @@ public class OrdBean {
 	private String prodName;
 	
 	
-	public int getOrderNo() {
+	public int getOrderNo() {s
 		return orderNo;
 	}
 	public void setOrderNo(int orderNo) {

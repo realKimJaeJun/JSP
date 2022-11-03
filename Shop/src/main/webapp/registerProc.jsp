@@ -6,18 +6,19 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-	String orderProduct  = request.getParameter("orderProduct");
-	String orderCount = request.getParameter("orderCount");
-	String orderId   = request.getParameter("orderId");
+	String prodNo  = request.getParameter("prodNo");
+	String prodCount = request.getParameter("prodCount");
+	String prodOrderer   = request.getParameter("prodOrderer");
 
 	int result = 0;
 	
 	try{
 		Connection conn = DBCP.getConnection();
 		PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_ORDER);
-		psmt.setString(1, orderId);
-		psmt.setString(2, orderProduct);
-		psmt.setString(3, orderCount);
+		psmt.setString(1, prodOrderer);
+		psmt.setString(2, prodNo);
+		psmt.setString(3, prodCount);
+		
 		
 		result = psmt.executeUpdate();
 		
