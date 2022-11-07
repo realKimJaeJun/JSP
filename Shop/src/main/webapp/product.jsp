@@ -112,7 +112,7 @@
 		</table>
 		<section style="display:none;">
 			<h4>주문하기</h4>
-			<table border="1"></table>
+			<table border="1">
 				<tr>
 					<td>상품번호</td>
 					<td><input type="text" name="prodNo" readonly="readonly"></td>
