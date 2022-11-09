@@ -47,29 +47,7 @@
 		<script>
 		
 		// 학번 검색
-		$.ajax({
-			type:'GET',
-			url:"/getSearchList",
-			data:$("table[id=stdList]").serialize(),
-			success:function(result){
-				$('#register > tbody').empty();
-				if(result.length>=1){
-					result.forEach)function(item){
-				str='<tr>'
-				str+="<td>"+rb.getRegstdno()+"</td>";
-				str+="<td>"+rb.getStdname()+"</td>";
-				str+="<td>"+rb.getLecname()+"</td>";
-				str+="<td>"+rb.getReglecno()+"</td>";
-				str+="<td>"+rb.getRegmidscore()+"</td>";
-				str+="<td>"+rb.getRegfinalscore()+"</td>";
-				str+="<td>"+rb.getRegtotalscore()+"</td>";
-				str+="<td>"+rb.getReggrade()+"</td>";
-				str+="</tr>"
-				$('#register').append(str);
-		}
-				}
-			}
-		});
+		
 		// 수강신청
 		
 		$(function(){
@@ -114,7 +92,7 @@
 		
 		<h4>수강현황</h4>
 		<input type="text" name="stdsearch" value=""/>
-		<input type="button" onclick="getSearchList()" class="btnStdSearch" value="찾기"/>
+		<input type="button" onclick="registerSearch()" class="btnStdSearch" value="찾기"></input>
 		<button class="btnRegister">수강신청</button>
 		<table border="1" id="stdList">
 			<tr>
