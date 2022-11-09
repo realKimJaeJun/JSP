@@ -47,8 +47,29 @@
 		<script>
 		
 		// 학번 검색
-		
-		
+		$.ajax({
+			type:'GET',
+			url:"/getSearchList",
+			data:$("table[id=stdList]").serialize(),
+			success:function(result){
+				$('#register > tbody').empty();
+				if(result.length>=1){
+					result.forEach)function(item){
+				str='<tr>'
+				str+="<td>"+rb.getRegstdno()+"</td>";
+				str+="<td>"+rb.getStdname()+"</td>";
+				str+="<td>"+rb.getLecname()+"</td>";
+				str+="<td>"+rb.getReglecno()+"</td>";
+				str+="<td>"+rb.getRegmidscore()+"</td>";
+				str+="<td>"+rb.getRegfinalscore()+"</td>";
+				str+="<td>"+rb.getRegtotalscore()+"</td>";
+				str+="<td>"+rb.getReggrade()+"</td>";
+				str+="</tr>"
+				$('#register').append(str);
+		}
+				}
+			}
+		});
 		// 수강신청
 		
 		$(function(){
@@ -92,9 +113,10 @@
 		<a href="/College/student.jsp">학생관리</a>
 		
 		<h4>수강현황</h4>
-		<button class="btnSearch">검색</button>
+		<input type="text" name="stdsearch" value=""/>
+		<input type="button" onclick="getSearchList()" class="btnStdSearch" value="찾기"/>
 		<button class="btnRegister">수강신청</button>
-		<table border="1">
+		<table border="1" id="stdList">
 			<tr>
 				<th>학번</th>
 				<th>이름</th>
