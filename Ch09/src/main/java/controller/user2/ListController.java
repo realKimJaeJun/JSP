@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import dao.User2DAO;
 import vo.User2VO;
 
+
+@WebServlet("/user2/list.do")
 public class ListController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +30,7 @@ public class ListController extends HttpServlet{
 		
 		req.setAttribute("users", users);
 		
-		// foward
+		// forward
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/list.jsp");
 		dispatcher.forward(req, resp);
 	}
