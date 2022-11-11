@@ -18,15 +18,14 @@
 	// multipart 폼 데이터 수신
 	String savePath = application.getRealPath("/file");
 	int maxSize = 1024 * 1024 * 10;
-	MultipartRequest mr = new MultipartRequest(request, savePath, maxSize, "utf-8", new DefaultFileRenamePolicy());
-	
+	MultipartRequest mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 
 	String title   = mr.getParameter("title");
 	String content = mr.getParameter("content");
 	String uid     = mr.getParameter("uid");
-	String fname   = mr.getFilesystemName("fname"); 
+	String fname   = mr.getFilesystemName("fname");
 	String regip   = request.getRemoteAddr();
-
+	
 	ArticleBean article = new ArticleBean();
 	article.setTitle(title);
 	article.setContent(content);
@@ -39,15 +38,16 @@
 	// 글 등록
 	int parent = dao.insertArticle(article);
 	
-	// 파일을 첨부 했으면
+	// 파일을 첨부했으면
 	if(fname != null){
+		
 		// 파일명 수정
 		int i = fname.lastIndexOf(".");
 		String ext = fname.substring(i);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss_");
 		String now = sdf.format(new Date());
-		String newName = now+uid+ext; // 20221026160417_접속ID.txt
+		String newName = now+uid+ext; // 20221026160417_chhak0503.txt
 		
 		File f1 = new File(savePath+"/"+fname);
 		File f2 = new File(savePath+"/"+newName);
@@ -57,5 +57,7 @@
 		// 파일 테이블 Insert
 		dao.insertFile(parent, newName, fname);
 	}
+	
 	response.sendRedirect("/Jboard1/list.jsp");
 %>
+

@@ -1,8 +1,5 @@
 package kr.co.jboard1.dao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import kr.co.jboard1.bean.TermsBean;
 import kr.co.jboard1.bean.UserBean;
 import kr.co.jboard1.db.DBHelper;
@@ -10,8 +7,6 @@ import kr.co.jboard1.db.Sql;
 
 public class UserDAO extends DBHelper {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
 	private static UserDAO instance = new UserDAO();
 	public static UserDAO getInstance() {
 		return instance;
@@ -21,7 +16,6 @@ public class UserDAO extends DBHelper {
 	// 기본 CRUD
 	public void insertUser(UserBean ub) {
 		try{
-			logger.info("insertUser");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.INSERT_USER);
 			psmt.setString(1, ub.getUid());
@@ -38,7 +32,6 @@ public class UserDAO extends DBHelper {
 			close();			
 		}catch(Exception e){
 			e.printStackTrace();
-			logger.error(e.getMessage());
 		}		
 	}
 	
@@ -47,7 +40,6 @@ public class UserDAO extends DBHelper {
 		TermsBean tb = null;
 		
 		try {
-			logger.info("selectTerms");
 			conn = getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(Sql.SELECT_TERMS);
@@ -59,7 +51,6 @@ public class UserDAO extends DBHelper {
 			close();
 		}catch (Exception e) {
 			e.printStackTrace();
-			logger.error(e.getMessage());
 		}
 		return tb;		
 	}
@@ -68,7 +59,6 @@ public class UserDAO extends DBHelper {
 		UserBean ub = null;
 		
 		try{
-			logger.info("selectUser");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_USER);
 			psmt.setString(1, uid);
@@ -91,7 +81,7 @@ public class UserDAO extends DBHelper {
 			}
 			close();
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return ub;
@@ -101,7 +91,6 @@ public class UserDAO extends DBHelper {
 		int result = 0;
 		
 		try{
-			logger.info("selectCountNick");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_NICK);
 			psmt.setString(1, nick);
@@ -114,7 +103,6 @@ public class UserDAO extends DBHelper {
 			close();
 		}catch(Exception e){
 			e.printStackTrace();
-			logger.error(e.getMessage());
 		}
 		
 		return result;
@@ -124,7 +112,6 @@ public class UserDAO extends DBHelper {
 		int result = 0;
 		
 		try{
-			logger.info("selectCountUid");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_UID);
 			psmt.setString(1, uid);
@@ -137,7 +124,6 @@ public class UserDAO extends DBHelper {
 			close();
 		}catch(Exception e){
 			e.printStackTrace();
-			logger.error(e.getMessage());
 		}
 		
 		return result;

@@ -87,6 +87,4 @@ public class UserBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
-	
 }

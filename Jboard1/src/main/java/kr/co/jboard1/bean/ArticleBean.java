@@ -1,7 +1,7 @@
 package kr.co.jboard1.bean;
 
 public class ArticleBean {
-
+	
 	private int no;
 	private int parent;
 	private int comment;
@@ -15,17 +15,14 @@ public class ArticleBean {
 	private String rdate;
 	
 	// 추가필드
-	private String nick;
 	private String fname;
+	private String nick;
 	
 	private int fno;
 	private int pno;
 	private String newName;
 	private String oriName;
 	private int download;
-	
-	
-	
 	
 	public String getFname() {
 		return fname;
@@ -64,7 +61,6 @@ public class ArticleBean {
 	public void setDownload(int download) {
 		this.download = download;
 	}
-	
 	public String getNick() {
 		return nick;
 	}
@@ -87,7 +83,6 @@ public class ArticleBean {
 	public void setParent(String parent) {
 		this.parent = Integer.parseInt(parent);
 	}
-	
 	
 	public int getComment() {
 		return comment;
@@ -143,6 +138,7 @@ public class ArticleBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	
 	
 	
 

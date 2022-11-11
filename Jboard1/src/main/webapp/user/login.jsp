@@ -3,14 +3,14 @@
 	request.setCharacterEncoding("utf-8");
 	String success = request.getParameter("success");
 %>
-<%@ include file="./_header.jsp" %>
+<jsp:include page="./_header.jsp"/>
 <script>
 	let success = "<%= success %>";
 	
 	if(success == "100"){
-		alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인하세요.');
+		alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인 하십시요.');
 	}else if(success == "101"){
-		alert('로그인이 필요합니다.');
+		alert('먼저 로그인을 하셔야 합니다.');
 	}
 </script>
 
@@ -38,4 +38,4 @@
         </div>
     </section>
 </main>
-<jsp:include page="./_footer.jsp"/> 
+<jsp:include page="./_footer.jsp"/>

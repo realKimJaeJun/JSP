@@ -1,28 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
-
 <script src="/Jboard1/js/validation.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/Jboard1/js/zipcode.js"></script>
-
-<!-- 	onkeydown="inputIdChk()"
-		중복체크를 하고 난 뒤 아이디 입력란에 사용 가능한 아이디를 지우고 새로운 아이디를 입력했을 경우에 대처
-		
-		"idUncheck"
-		아이디 중복체크 여부 판단
- -->
 <main id="user">
     <section class="register">
-
         <form action="/Jboard1/user/proc/registerProc.jsp" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
                     <td>아이디</td>
-                    <td>						
-                        <input type="text" name="uid" onkeydown="inputIdChk()" placeholder="아이디 입력"/>
+                    <td>
+                        <input type="text" name="uid" placeholder="아이디 입력"/>
                         <button type="button" id="btnIdCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
-                        <input type="hidden" name="idDuplication" value="idUncheck">
                         <span class="uidResult"></span>
                     </td>
                 </tr>
@@ -32,8 +22,9 @@
                 </tr>
                 <tr>
                     <td>비밀번호 확인</td>
-                    <td><input type="password" name="pass2" placeholder="비밀번호 입력 확인"/>
-                    <span class="passResult"></span>
+                    <td>
+                    	<input type="password" name="pass2" placeholder="비밀번호 입력 확인"/>
+                    	<span class="passResult"></span>
                     </td>
                 </tr>
             </table>
@@ -44,7 +35,7 @@
                     <td>이름</td>
                     <td>
                         <input type="text" name="name" placeholder="이름 입력"/>
-                        <span class="nameResult"></span>                        
+                        <span class="nameResult"></span>
                     </td>
                 </tr>
                 <tr>
@@ -58,14 +49,16 @@
                 </tr>
                 <tr>
                     <td>이메일</td>
-                    <td><input type="email" name="email" placeholder="이메일 입력"/>
-                    <span class="emailResult"></span>
+                    <td>
+                    	<input type="email" name="email" placeholder="이메일 입력"/>
+                    	<span class="emailResult"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
-                    <td><input type="text" name="hp" placeholder="휴대폰 입력"/>
-                    <span class="hpResult"></span>
+                    <td>
+                    	<input type="text" name="hp" placeholder="휴대폰 입력"/>
+                    	<span class="hpResult"></span>
                     </td>
                 </tr>
                 <tr>
@@ -88,4 +81,4 @@
 
     </section>
 </main>
-<%@ include file="./_footer.jsp" %>    
+<%@ include file="./_footer.jsp" %>
