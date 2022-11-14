@@ -25,6 +25,13 @@
 					<td><input type="text" name="hp" placeholder="휴대폰 입력" ></td>
 				</tr>
 				<tr>
+					<td>성별</td>
+					<td>
+						<label><input type="radio" name="gender" placeholder="남"/>남</label>
+						<label><input type="radio" name="gender" placeholder="여"/>여</label>
+					</td>
+				</tr>
+				<tr>
 					<td>나이</td>
 					<td><input type="number" name="age" placeholder="나이 입력" ></td>
 				</tr>

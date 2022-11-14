@@ -9,9 +9,9 @@
 	<body>
 		<h3>user 수정</h3>
 		<a href="#">처음으로</a>
-		<a href="/Ch09/user2/list.do">user1 목록</a>
+		<a href="/Ch09/user5/list.do">user1 목록</a>
 		
-		<form action="/Ch09/user2/modify.do" method="post">
+		<form action="/Ch09/user5/modify.do" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
@@ -22,12 +22,27 @@
 					<td><input type="text" name="name" value="${vo.name}"/></td>
 				</tr>
 				<tr>
-					<td>휴대폰</td>
-					<td><input type="text" name="hp" value="${vo.hp}"/></td>
+					<td>생년월일</td>
+					<td><input type="date" name="birth" value="${vo.birth}"/></td>
+				</tr>
+				<tr>
+					<td>성별</td>
+					<td>
+						<label><input type="radio" name="gender" value="1"/>남</label>
+						<label><input type="radio" name="gender" value="2"/>여</label>
+					</td>
 				</tr>
 				<tr>
 					<td>나이</td>
 					<td><input type="number" name="age" value="${vo.age}"/></td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td><input type="text" name="addr" value="${vo.addr}"/></td>
+				</tr>
+				<tr>
+					<td>휴대폰</td>
+					<td><input type="text" name="hp" value="${vo.hp}"/></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">
