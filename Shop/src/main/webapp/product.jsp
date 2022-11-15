@@ -1,3 +1,4 @@
+<%@page import="bean.ProdBean"%>
 <%@page import="config.SQL"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="java.sql.ResultSet"%>
@@ -5,7 +6,6 @@
 <%@page import="config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.ProdBean"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%

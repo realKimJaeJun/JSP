@@ -1,8 +1,8 @@
+<%@page import="bean.UserBean"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="config.DBCP"%>
-<%@page import="bean.UserBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>

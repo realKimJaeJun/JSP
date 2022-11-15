@@ -1,10 +1,10 @@
+<%@page import="bean.OrdBean"%>
 <%@page import="config.SQL"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.OrdBean"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%

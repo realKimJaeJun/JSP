@@ -1,6 +1,6 @@
+<%@page import="bean.CustBean"%>
 <%@page import="config.SQL"%>
 <%@page import="config.DBCP"%>
-<%@page import="bean.CustBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>

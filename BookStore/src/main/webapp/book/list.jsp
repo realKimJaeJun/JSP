@@ -1,9 +1,9 @@
+<%@page import="bean.BookBean"%>
 <%@page import="config.DBCP"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.BookBean"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
