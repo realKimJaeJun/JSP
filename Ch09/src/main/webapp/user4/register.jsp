@@ -27,8 +27,8 @@
 				<tr>
 					<td>성별</td>
 					<td>
-						<label><input type="radio" name="gender" placeholder="남"/>남</label>
-						<label><input type="radio" name="gender" placeholder="여"/>여</label>
+						<label><input type="radio" name="gender" value="1"/>남</label>
+						<label><input type="radio" name="gender" value="2"/>여</label>
 					</td>
 				</tr>
 				<tr>
