@@ -1,4 +1,4 @@
-package kr.co.farmstory.db;
+package kr.co.farmstory1.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

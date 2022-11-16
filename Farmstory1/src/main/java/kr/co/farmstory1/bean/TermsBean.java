@@ -1,4 +1,4 @@
-package kr.co.farmstory.bean;
+package kr.co.farmstory1.bean;
 
 public class TermsBean {
 	private String terms;
