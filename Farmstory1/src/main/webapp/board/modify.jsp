@@ -1,22 +1,25 @@
-<%@page import="kr.co.farmstory1.bean.ArticleBean"%>
 <%@page import="kr.co.farmstory1.dao.ArticleDAO"%>
+<%@page import="kr.co.farmstory1.bean.ArticleBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
-<%	
-	String no = request.getParameter("no");
-	String pg = request.getParameter("pg");
+<%
 	String group = request.getParameter("group");
-	String cate = request.getParameter("cate");
-	pageContext.include("/board/_"+group+".jsp");
+	String cate  = request.getParameter("cate");
+	String pg  = request.getParameter("pg");
+	String no  = request.getParameter("no");
 	
 	ArticleBean article = ArticleDAO.getInstance().selectArticle(no);
+	
+	pageContext.include("/board/_"+group+".jsp");
 %>
         <main id="board">
             <section class="modify">
 
                 <form action="/Farmstory1/board/proc/modifyProc.jsp" method="post">
-                	<input type="hidden" name="pg" value="<%= pg %>"/>
+                	<input type="hidden" name="group" value="<%= group %>"/>
+                	<input type="hidden" name="cate" value="<%= cate %>"/>
                 	<input type="hidden" name="no" value="<%= no %>"/>
+                	<input type="hidden" name="pg" value="<%= pg %>"/>
                     <table border="0">
                         <caption>글수정</caption>
                         <tr>
@@ -32,7 +35,7 @@
                     </table>
                     
                     <div>
-                        <a href="/Farmstory1/board/view.jsp?group=<%= group %>&cate=<%= cate %>&pg=<%= pg %>&no=<%= no %>" class="btn btnCancel">취소</a>
+                        <a href="./view.jsp?group=<%= group %>&cate=<%= cate %>&no=<%= no %>&pg=<%= pg %>" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>

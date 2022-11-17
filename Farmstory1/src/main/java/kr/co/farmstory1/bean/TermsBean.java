@@ -17,5 +17,4 @@ public class TermsBean {
 	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
 	}
-	
 }

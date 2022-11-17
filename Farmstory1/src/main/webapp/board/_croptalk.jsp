@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	String cate = request.getParameter("cate");
+	String cate  = request.getParameter("cate");
 %>
 <div id="sub">
     <div><img src="../img/sub_top_tit3.png" alt="CROP TALK"></div>
@@ -20,18 +20,12 @@
                 <img src="../img/sub_nav_tit_cate3_<%= cate %>.png" alt="농작물이야기"/>
                 <p>
                     HOME > 농작물이야기 > 
-                    <%
-                    switch(cate){
-                    case "story":
-	                   	out.print("<em>농작물이야기</em>");
-	                   	break;
-                    case "grow":
-	                    out.print("<em>텃밭가꾸기</em>");
-	                    break;
-                    case "school":
-	                    out.print("<em>귀농학교</em>");
-	                    break;
-                    }
-                    %>
+                    <% if(cate.equals("story")){ %>
+                    	<em>농작물이야기</em>
+                    <% }else if(cate.equals("grow")){ %>
+                    	<em>텃밭가꾸기</em>
+                    <% }else if(cate.equals("school")){ %>
+                    	<em>귀농학교</em>
+                    <% } %>
                 </p>
             </nav>

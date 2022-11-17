@@ -1,8 +1,8 @@
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.io.File"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="kr.co.farmstory1.bean.ArticleBean"%>
 <%@page import="kr.co.farmstory1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
@@ -11,15 +11,18 @@
 
 	// multipart 폼 데이터 수신
 	String savePath = application.getRealPath("/file");
+	File targetDir = new File(savePath);
+	if(!targetDir.exists()){
+		targetDir.mkdirs();
+	}
 	int maxSize = 1024 * 1024 * 10;
 	MultipartRequest mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 
-	String pg = request.getParameter("pg");
 	String group   = mr.getParameter("group");
 	String cate    = mr.getParameter("cate");
-	String title   = mr.getParameter("title");
-	String content = mr.getParameter("content");
 	String uid     = mr.getParameter("uid");
+	String title   = mr.getParameter("title");
+	String content = mr.getParameter("content");	
 	String fname   = mr.getFilesystemName("fname");
 	String regip   = request.getRemoteAddr();
 		
@@ -56,5 +59,5 @@
 		dao.insertFile(parent, newName, fname);
 	}
 	
-	response.sendRedirect("/Farmstory1/board/list.jsp?group="+group+"&cate="+cate+"&pg="+pg);
+	response.sendRedirect("/Farmstory1/board/list.jsp?group="+group+"&cate="+cate);
 %>

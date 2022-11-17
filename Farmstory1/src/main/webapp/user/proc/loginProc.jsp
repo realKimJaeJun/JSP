@@ -1,11 +1,11 @@
-<%@page import="kr.co.farmstory1.dao.UserDAO"%>
 <%@page import="kr.co.farmstory1.bean.UserBean"%>
+<%@page import="kr.co.farmstory1.dao.UserDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	request.setCharacterEncoding("UTF-8");
-	String uid = request.getParameter("uid");
-	String pass = request.getParameter("pass");
-	
+	request.setCharacterEncoding("utf-8");
+ 	String uid = request.getParameter("uid");
+ 	String pass = request.getParameter("pass");
+ 	
 	UserBean ub = UserDAO.INSTANCE.selectUser(uid, pass);
 	
 	if(ub != null){

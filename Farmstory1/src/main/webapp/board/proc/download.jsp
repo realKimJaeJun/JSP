@@ -16,7 +16,7 @@
 	
 	// 파일 정보 가져오기 & 파일 다운로드 카운트 +1
 	ArticleDAO dao = ArticleDAO.getInstance();
-	
+	 
 	FileBean fb = dao.selectFile(parent);
 	dao.updateFileDownload(fb.getFno());
 

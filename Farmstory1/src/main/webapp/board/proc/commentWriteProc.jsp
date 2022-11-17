@@ -15,7 +15,7 @@
 	ArticleBean comment = new ArticleBean();
 	comment.setParent(no);
 	comment.setContent(content);
-	comment.setUid(uid);
+	comment.setUid(uid); 
 	comment.setRegip(regip);
 	
 	ArticleBean article = ArticleDAO.getInstance().insertComment(comment);
@@ -31,5 +31,4 @@
 	String jsonData = json.toString();
 	out.print(jsonData);
 	
-	//response.sendRedirect("/Jboard1/view.jsp?no="+no+"&pg="+pg);	
 %>

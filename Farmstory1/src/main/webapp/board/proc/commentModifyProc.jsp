@@ -9,7 +9,7 @@
 	int result = ArticleDAO.getInstance().updateComment(no, content);
 
 	JsonObject json = new JsonObject();
-	json.addProperty("result", result);
+	json.addProperty("result", result); 
 	
 	out.print(json.toString());
 %>

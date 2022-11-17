@@ -8,7 +8,6 @@ import java.sql.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import kr.co.farmstory1.bean.TermsBean;
 import kr.co.farmstory1.bean.UserBean;
 import kr.co.farmstory1.db.DBCP;
@@ -42,6 +41,8 @@ public enum UserDAO {
 			e.printStackTrace();
 		}		
 	}
+	
+	
 	public TermsBean selectTerms() {
 		
 		TermsBean tb = null;
@@ -55,17 +56,17 @@ public enum UserDAO {
 				tb.setTerms(rs.getString(1));
 				tb.setPrivacy(rs.getString(2));
 			}
-			
+
 			rs.close();
 			stmt.close();
 			conn.close();
 		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+		
 		return tb;
 	}
 	public UserBean selectUser(String uid, String pass) {
-		
 		UserBean ub = null;
 		try {
 			logger.info("selectUser...");
@@ -91,7 +92,6 @@ public enum UserDAO {
 				ub.setRegip(rs.getString(11));
 				ub.setRdate(rs.getString(12));
 			}
-			
 			rs.close();
 			psmt.close();
 			conn.close();
@@ -100,10 +100,59 @@ public enum UserDAO {
 			logger.error(e.getMessage());
 		}
 		logger.debug("ub : "+ub);
-		
 		return ub;
 	}
+	
+	public int selectCountNick(String nick) {
+		int result = 0;
+		
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_NICK);
+			psmt.setString(1, nick);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				result = rs.getInt(1);
+			}
+			conn.close();
+			psmt.close();
+			rs.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public int selectCountUid(String uid) {
+		int result = 0;
+		
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_UID);
+			psmt.setString(1, uid);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				result = rs.getInt(1);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void selectUsers() {}
 	public void updateUser() {}
 	public void deleteUser() {}
+	
 }

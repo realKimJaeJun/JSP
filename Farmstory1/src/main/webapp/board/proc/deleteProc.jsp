@@ -3,11 +3,13 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
+	String group = request.getParameter("group");
+	String cate = request.getParameter("cate");
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
 
 	ArticleDAO dao = ArticleDAO.getInstance();
-	
+	 
 	// 글 삭제 + 댓글 삭제
 	dao.deleteArticle(no);
 	
@@ -26,5 +28,5 @@
 		}
 	}
 
-	response.sendRedirect("/Farmstory1/board/list.jsp?pg="+pg+"&result=202");
+	response.sendRedirect("/Farmstory1/board/list.jsp?group="+group+"&cate="+cate+"&no="+no+"&pg="+pg+"&result=202");
 %>

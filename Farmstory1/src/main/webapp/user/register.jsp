@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
+<script src="/Farmstory1/js/validation.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Farmstory1/js/zipcode.js"></script>
 <main id="user">
     <section class="register">
-        <form action="./proc/registerProc.jsp" method="post">
+        <form action="/Farmstory1/user/proc/registerProc.jsp" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>

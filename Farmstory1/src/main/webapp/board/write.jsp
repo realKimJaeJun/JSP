@@ -6,18 +6,16 @@
 		return;
 	}
 
-
 	String group = request.getParameter("group");
-	String cate = request.getParameter("cate");
+	String cate  = request.getParameter("cate");
 	pageContext.include("/board/_"+group+".jsp");
 %>
         <main id="board">
             <section class="write">
-
-                <form action="/Farmstory1/board/proc/writeProc.jsp" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="group" value="<%= group %>"/>
-                <input type="hidden" name="cate" value="<%= cate %>"/>
-                <input type="hidden" name="uid" value="<%= sessUser.getUid() %>"/>
+                <form action="./proc/writeProc.jsp" method="post" enctype="multipart/form-data">
+                	<input type="hidden" name="group" value="<%= group %>"/>
+                	<input type="hidden" name="cate" value="<%= cate %>"/>
+                	<input type="hidden" name="uid" value="<%= sessUser.getUid() %>"/>
                     <table border="0">
                         <caption>글쓰기</caption>
                         <tr>
@@ -43,9 +41,10 @@
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>
-                </section>
-                </main>
-				</article>
+
             </section>
-        </div>
+        </main>
+        </article>
+</section>
+</div>
 <%@ include file="/_footer.jsp" %>
