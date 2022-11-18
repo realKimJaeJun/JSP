@@ -1,4 +1,4 @@
-package controller.user1;
+package controller.customer;
 
 import java.io.IOException;
 
@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.User1DAO;
-import vo.User1VO;
+import dao.CustomerDAO;
+import vo.CustomerVO;
 
 
-@WebServlet("/user1/modify.do")
-public class ModifyController extends HttpServlet {
+@WebServlet("/customer/modify.do")
+public class ModifyController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,31 +25,33 @@ public class ModifyController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String uid = req.getParameter("uid");
+		int custId = Integer.parseInt(req.getParameter("custId"));
 		
-		User1VO vo = User1DAO.getInstance().selectUser1(uid);
+		CustomerVO vo = CustomerDAO.getInstance().selectCust(custId);
+		
 		req.setAttribute("vo", vo);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user1/modify.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/Bookstore2/customer/modify.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String uid  = req.getParameter("uid");
+		int custId = Integer.parseInt(req.getParameter("custId"));
 		String name = req.getParameter("name");
-		String hp   = req.getParameter("hp");
-		String age  = req.getParameter("age");
+		String address = req.getParameter("address");
+		String phone = req.getParameter("phone");
 		
-		User1VO vo = new User1VO();
-		vo.setUid(uid);
+		CustomerVO vo = new CustomerVO();
+		vo.setCustId(custId);
 		vo.setName(name);
-		vo.setHp(hp);
-		vo.setAge(age);
+		vo.setAddress(address);
+		vo.setPhone(phone);
 		
-		User1DAO.getInstance().updateUser1(vo);
 		
-		resp.sendRedirect("/Ch09/user1/list.do");
+		CustomerDAO.getInstance().updateCust(vo);
+		
+		resp.sendRedirect("/customer/list.do");
 	}
 	
 }

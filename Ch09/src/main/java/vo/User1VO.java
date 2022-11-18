@@ -1,7 +1,7 @@
 package vo;
 
 public class User1VO {
-
+	
 	private String uid;
 	private String name;
 	private String hp;
@@ -34,4 +34,5 @@ public class User1VO {
 	public void setAge(String age) {
 		this.age = Integer.parseInt(age);
 	}
+
 }
