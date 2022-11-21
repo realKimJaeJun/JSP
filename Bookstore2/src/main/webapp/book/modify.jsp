@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,7 +11,7 @@
 		<a href="/Bookstore2/index.jsp">처음으로</a>
 		<a href="/Bookstore2/book/list.do">도서목록</a>
 		
-		<form action="/Bookstore2/book/modify.do" method="post">
+		<form action="./modify.do" method="post">
 			<table border="1">
 				<tr>
 					<td>도서번호</td>

@@ -32,14 +32,14 @@ public class BookDAO extends DBHelper{
 		}
 	}
 		
-		public BookVO selectBook(int bookId) {
+		public BookVO selectBook(String bookId) {
 			
 			BookVO vo = null;
 			
 			try {
 				conn = getConnection();
 				psmt = conn.prepareStatement("SELECT * FROM `book` WHERE `bookId`=?");
-				psmt.setInt(1, bookId);
+				psmt.setString(1, bookId);
 				rs = psmt.executeQuery();
 				
 				if(rs.next()) {
@@ -85,10 +85,10 @@ public class BookDAO extends DBHelper{
 			try {
 				conn = getConnection();
 				psmt = conn.prepareStatement("UPDATE `book` SET `bookName`=?, `publisher`=?, `price`=? WHERE `bookId`=?");
-				psmt.setInt(1, vo.getBookId());
-				psmt.setString(2, vo.getBookName());
-				psmt.setString(3, vo.getPublisher());
-				psmt.setInt(4, vo.getPrice());
+				psmt.setString(1, vo.getBookName());
+				psmt.setString(2, vo.getPublisher());
+				psmt.setInt(3, vo.getPrice());
+				psmt.setInt(4, vo.getBookId());
 				psmt.executeUpdate();
 				close();
 			}catch (Exception e) {

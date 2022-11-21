@@ -25,7 +25,7 @@ public class ModifyController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		int bookId = Integer.parseInt(req.getParameter("bookId"));
+		String bookId = req.getParameter("bookId");
 		
 		BookVO vo = BookDAO.getInstance().selectBook(bookId);
 		
