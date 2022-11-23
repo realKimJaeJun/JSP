@@ -23,8 +23,8 @@
         
         <div>
             <a href="#" class="btn btnRemove">삭제</a>
-            <a href="./modify.html" class="btn btnModify">수정</a>
-            <a href="./list.html" class="btn btnList">목록</a>
+            <a href="./modify.do" class="btn btnModify">수정</a>
+            <a href="./list.do" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->

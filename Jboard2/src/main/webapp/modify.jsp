@@ -24,7 +24,7 @@
             </table>
             
             <div>
-                <a href="./view.html" class="btn btnCancel">취소</a>
+                <a href="./view.do" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>

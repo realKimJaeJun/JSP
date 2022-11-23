@@ -40,7 +40,9 @@ public enum UserService {
 	public int selectCountNick(String nick) {
 		return dao.selectCountNick(nick);
 	}
-	public void selectUser() {}
+	public UserVO selectUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
+	}
 	public void selectUsers() {}
 	public void updateUser() {}
 	public void deleteUser() {}

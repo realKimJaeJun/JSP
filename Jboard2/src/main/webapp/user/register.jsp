@@ -6,14 +6,14 @@
 <main id="user">
     <section class="register">
 
-        <form action="/proc/register.do" method="post">
+        <form action="/Jboard2/user/register.do" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
                     <td>아이디</td>
                     <td>
                         <input type="text" name="uid" placeholder="아이디 입력"/>
-                        <button type="button" id="btnIdCheck"><img src="../img/chk_id.gif" alt="중복확인"/></button>
+                        <button type="button" id="btnUidCheck"><img src="../img/chk_id.gif" alt="중복확인"/></button>
                         <span class="resultUid"></span>
                     </td>
                 </tr>
@@ -44,7 +44,7 @@
                     <td>
                         <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
                         <input type="text" name="nick" placeholder="별명 입력"/>
-                        <button type="button"><img src="../img/chk_id.gif" alt="중복확인"/></button>
+                        <button type="button" id="btnNickCheck"><img src="../img/chk_id.gif" alt="중복확인"/></button>
                         <span class="resultNick"></span>
                     </td>
                 </tr>
