@@ -9,7 +9,6 @@ import kr.co.jboard2.vo.TermsVO;
 import kr.co.jboard2.vo.UserVO;
 
 public class UserDAO extends DBHelper {
-	
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -30,10 +29,9 @@ public class UserDAO extends DBHelper {
 			psmt.setString(9, vo.getAddr2());
 			psmt.setString(10, vo.getRegip());
 			psmt.executeUpdate();
-			
 			close();
 			
-		} catch (Exception e) {
+		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
@@ -64,10 +62,11 @@ public class UserDAO extends DBHelper {
 		return vo;
 	}
 	public int selectCountUid(String uid) {
+		
 		int result = 0;
 		
 		try {
-			logger.info("selectCountUid...");
+			logger.info("selectCheckUid");
 			
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_UID);
@@ -77,19 +76,23 @@ public class UserDAO extends DBHelper {
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
+			
 			close();
-		} catch (Exception e) {
+		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		logger.debug("result : "+ result);
+		
+		logger.debug("result : " + result);
 		
 		return result;
 	}
+	
 	public int selectCountNick(String nick) {
+		
 		int result = 0;
 		
 		try {
-			logger.info("selectCountNick...");
+			logger.info("selectCheckNick");
 			
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_NICK);
@@ -99,14 +102,18 @@ public class UserDAO extends DBHelper {
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
+			
 			close();
-		} catch (Exception e) {
+		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		logger.debug("result : "+ result);
+		
+		logger.debug("result : " + result);
+		
 		return result;
 	}
 	public UserVO selectUser(String uid, String pass) {
+		
 		UserVO vo = null;
 		try {
 			logger.info("selectUser...");
@@ -132,14 +139,87 @@ public class UserDAO extends DBHelper {
 				vo.setRdate(rs.getString(12));
 			}
 			close();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
+	public UserVO selectUserForFindId(String name, String email) {
+		
+		UserVO vo = null;
+		
+		try {
+			logger.info("selectUserForFindId...");
 			
-		} catch (Exception e) {
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_FOR_FIND_ID);
+			psmt.setString(1, name);
+			psmt.setString(2, email);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo = new UserVO();
+				vo.setUid(rs.getString(1));
+				vo.setName(rs.getString(3));
+				vo.setEmail(rs.getString(5));
+				vo.setRdate(rs.getString(12));
+			}
+			close();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
+	public UserVO selectUserForFindPw(String uid, String email) {
+		
+		UserVO vo = null;
+		
+		try {
+			logger.info("selectUserForFindPw...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_FOR_FIND_PW);
+			psmt.setString(1, uid);
+			psmt.setString(2, email);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo = new UserVO();
+				vo.setUid(rs.getString(1));
+			}
+			close();
+			
+		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		return vo;
 	}
 	public void selectUsers() {}
 	public void updateUser() {}
+	public int updateUserPassword(String uid, String pass) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("updateUserPassword...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER_PASSWORD);
+			psmt.setString(1, pass);
+			psmt.setString(2, uid);
+			result = psmt.executeUpdate();
+			
+			close();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return result;
+	}
+	
 	public void deleteUser() {}
 	
 }

@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.jboard2.service.user.UserService;
+import kr.co.jboard2.vo.ArticleVO;
+
 @WebServlet("/list.do")
 public class ListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private UserService service = UserService.INSTANCE;
 
 	@Override
 	public void init() throws ServletException {
@@ -20,6 +24,9 @@ public class ListController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
 		dispatcher.forward(req, resp);
 	}
