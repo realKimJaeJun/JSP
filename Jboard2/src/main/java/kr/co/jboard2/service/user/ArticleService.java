@@ -1,5 +1,6 @@
 package kr.co.jboard2.service.user;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.co.jboard2.dao.ArticleDAO;
 import kr.co.jboard2.vo.ArticleVO;
+import kr.co.jboard2.vo.FileVO;
 
 
 public enum ArticleService {
@@ -40,42 +42,37 @@ public enum ArticleService {
 	public int selectCountTotal() {
 		return dao.selectCountTotal();
 	}
-	public void selectArticle() {
-		
+	public ArticleVO selectArticle(String no) {
+		return dao.selectArticle(no);
 	}
-	public void selectArticles() {
-		
+	public List<ArticleVO> selectArticles(int limitStart) {
+		return dao.selectArticles(limitStart);
 	}
-	public void selectFile() {
-		
+	public FileVO selectFile(String parent) {
+		return dao.selectFile(parent);
 	}
-	public void selectComment() {
-		
+	public List<ArticleVO> selectComments(String parent) {
+		return dao.selectComments(parent);
 	}
-	public void updateArticle() {
-		
+	public void updateArticle(String no, String title, String content) {
+		dao.updateArticle(no, title, content);
 	}
-	public void updateArticleHit() {
-		
+	public void updateArticleHit(String no) {
+		dao.updateArticleHit(no);
 	}
-	public void updateFileDownload() {
-		
+	public void updateFileDownload(int fno) {
+		dao.updateFileDownload(fno);
 	}
-	public void updateComment() {
-		
+	public int updateComment(String no, String content) {
+		return dao.updateComment(no, content);
 	}
-	public void deleteArticle() {
-		
+	public void deleteArticle(String no) {
+		dao.deleteArticle(no);
 	}
-	public void deleteFile() {
-		
+	public String deleteFile(String no) {
+		return dao.deleteFile(no);
 	}
-	public void deleteComment() {
-		
+	public int deleteComment(String no, String parent) {
+		return dao.deleteComment(no, parent);
 	}
-	
-	
-	
-	
-	
 }

@@ -28,7 +28,6 @@ public class CheckUidController extends HttpServlet{
 		
 		String uid = req.getParameter("uid");
 		int result = service.selectCountUid(uid);
-		
 		// JSON 출력
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);

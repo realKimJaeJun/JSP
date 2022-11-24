@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.jboard2.service.user.ArticleService;
+import kr.co.jboard2.vo.ArticleVO;
+
 @WebServlet("/modify.do")
 public class ModifyController extends HttpServlet {
 
