@@ -19,7 +19,7 @@ public class ArticleDAO extends DBHelper{
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	// 기본 CRUD
-	public int insertArticle(ArticleVO vo) {
+	public int insertArticle(ArticleVO article) {
 		
 		int parent = 0;
 		
@@ -33,11 +33,11 @@ public class ArticleDAO extends DBHelper{
 			psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
 			stmt = conn.createStatement();
 			
-			psmt.setString(1, vo.getTitle());
-			psmt.setString(2, vo.getContent());
-			psmt.setInt(3, vo.getFname() == null ? 0 : 1);
-			psmt.setString(4, vo.getUid());
-			psmt.setString(5, vo.getRegip());
+			psmt.setString(1, article.getTitle());
+			psmt.setString(2, article.getContent());
+			psmt.setInt(3, article.getFname() == null ? 0 : 1);
+			psmt.setString(4, article.getUid());
+			psmt.setString(5, article.getRegip());
 			psmt.executeUpdate();
 			rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
 			

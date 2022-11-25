@@ -2,8 +2,8 @@
 <jsp:include page="./_header.jsp"/>
 <main id="board">
     <section class="write">
-
-        <form action="#">
+        <form action="/Jboard2/write.do" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="uid" value="${sessUser.uid}"/>
             <table border="0">
                 <caption>글쓰기</caption>
                 <tr>
@@ -19,13 +19,13 @@
                 <tr>
                     <th>파일</th>
                     <td>
-                        <input type="file" name="file"/>
+                        <input type="file" name="fname"/>
                     </td>
                 </tr>
             </table>
             
             <div>
-                <a href="./list.do" class="btn btnCancel">취소</a>
+                <a href="./list.html" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>
