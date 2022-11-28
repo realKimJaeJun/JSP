@@ -48,8 +48,8 @@ public enum ArticleService {
 	public ArticleVO insertComment(int parent, String content, String uid, String regip) {
 		return dao.insertComment(parent, content, uid, regip);
 	}
-	public int selectCountTotal() {
-		return dao.selectCountTotal();
+	public int selectCountTotal(String search) {
+		return dao.selectCountTotal(search);
 	}
 	public ArticleVO selectArticle(String no) {
 		return dao.selectArticle(no);
@@ -57,6 +57,10 @@ public enum ArticleService {
 	public List<ArticleVO> selectArticles(int limitStart) {
 		return dao.selectArticles(limitStart);
 	}
+	public List<ArticleVO> selectArticlesByKeyword(String keyword, int start) {
+		return dao.selectArticlesByKeyword(keyword, start);
+	}
+	
 	public FileVO selectFile(String parent) {
 		return dao.selectFile(parent);
 	}
