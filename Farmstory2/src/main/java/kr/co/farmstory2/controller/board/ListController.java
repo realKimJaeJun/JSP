@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/list.do")
+@WebServlet("/board/list.do")
 public class ListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/board/list.jsp");
 		dispatcher.forward(req, resp);
 	}
 	

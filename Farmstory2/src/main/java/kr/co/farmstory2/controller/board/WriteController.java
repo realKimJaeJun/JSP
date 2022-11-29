@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/write.do")
+@WebServlet("/board/write.do")
 public class WriteController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -20,7 +20,7 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/write.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/board/write.jsp");
 		dispatcher.forward(req, resp);
 	}
 	

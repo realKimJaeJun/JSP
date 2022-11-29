@@ -42,7 +42,7 @@ public class LogoutController extends HttpServlet{
 		
 		// 데이터베이스 사용자 sessId update
 		service.updateUserForSessionOut(uid);
-		resp.sendRedirect("/Farmstory2/index.do?success=200");
+		resp.sendRedirect("/Farmstory2/user/login.do?success=200");
 		
 	}
 	
