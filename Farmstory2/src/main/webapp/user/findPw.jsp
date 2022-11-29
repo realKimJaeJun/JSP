@@ -29,7 +29,7 @@
 				success: function(data){
 					
 					if(data.result > 0){
-						location.href = "/Jboard2/user/findPwChange.do";
+						location.href = "/Farmstory2/user/findPwChange.do";
 					}else{
 						alert('일치하는 회원이 없습니다.\n아이디와 이메일을 다시 확인 하시기 바랍니다.');
 					}

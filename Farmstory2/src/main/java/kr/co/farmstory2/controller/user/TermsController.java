@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.farmstory2.service.UserService;
+import kr.co.farmstory2.vo.TermsVO;
+
 @WebServlet("/user/terms.do")
 public class TermsController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private UserService service = UserService.INSTANCE;
 	
 	@Override
 	public void init() throws ServletException {
@@ -20,6 +24,11 @@ public class TermsController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		TermsVO vo = service.selectTerms();
+		req.setAttribute("vo", vo);
+		
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/terms.jsp");
 		dispatcher.forward(req, resp);
 	}

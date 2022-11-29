@@ -45,7 +45,6 @@ public class EmailAuthController extends HttpServlet {
 		
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
-		
 	}
 	
 	@Override
