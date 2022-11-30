@@ -36,7 +36,9 @@ public class AutoLoginFilter implements Filter{
 		
 		if(sessUser != null) {
 			// 로그인 상태일 경우
+//			req.setAttribute("reqUser", sessUser);
 			chain.doFilter(request, response);
+			return;
 		}else {
 			// 로그인 상태가 아닐 경우
 			

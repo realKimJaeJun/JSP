@@ -29,7 +29,6 @@ public class LoginCheckFilter implements Filter{
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// 필터를 동작할 요청주소 리스트 구성
 		uriList = new ArrayList<>();
-		uriList.add("/farmstory2/board/list.do");
 		uriList.add("/farmstory2/board/write.do");
 		uriList.add("/farmstory2/board/modify.do");
 		uriList.add("/farmstory2/board/view.do");
@@ -56,12 +55,10 @@ public class LoginCheckFilter implements Filter{
 			
 			// 로그인을 했을 경우
 			if(sessUser != null) {
-				((HttpServletResponse) response).sendRedirect("/farmstory2/board/list.do");
+				((HttpServletResponse) response).sendRedirect("/farmstory2/index.do");
 				return;
 			}
 		}
-		
 		chain.doFilter(request, response);
-		
 	}
 }

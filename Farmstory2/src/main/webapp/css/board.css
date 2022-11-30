@@ -1,4 +1,7 @@
 /* 글목록 */
+
+input, textarea {outline:none;}
+
 #board > .list {
     position: relative;
     width: 720px;
