@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import kr.co.farmstory2.service.UserService;
+import kr.co.farmstory2.service.user.UserService;
+
 
 
 

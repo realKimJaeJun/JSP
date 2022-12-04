@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonObject;
 
-import kr.co.farmstory2.service.UserService;
+import kr.co.farmstory2.service.user.UserService;
 import kr.co.farmstory2.vo.UserVO;
 
 
