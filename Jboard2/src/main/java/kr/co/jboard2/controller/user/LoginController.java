@@ -63,10 +63,11 @@ public class LoginController extends HttpServlet {
 			}
 			
 			resp.sendRedirect("/Jboard2/list.do");
-			
+			return;
 		}else {
 			// 회원이 아닐 경우
 			resp.sendRedirect("/Jboard2/user/login.do?success=100");
+			return;
 		}
 		
 		

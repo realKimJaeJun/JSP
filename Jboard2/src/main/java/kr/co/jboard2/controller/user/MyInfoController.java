@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.jboard2.dao.UserDAO;
 import kr.co.jboard2.service.user.UserService;
 import kr.co.jboard2.vo.UserVO;
 
-@WebServlet("/user/register.do")
-public class RegisterController extends HttpServlet {
+@WebServlet("/user/myInfo.do")
+public class MyInfoController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
@@ -24,7 +25,7 @@ public class RegisterController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/register.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/myInfo.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
@@ -41,9 +42,8 @@ public class RegisterController extends HttpServlet {
 		String zip = req.getParameter("zip");
 		String addr1 = req.getParameter("addr1");
 		String addr2 = req.getParameter("addr2");
-		String regip = req.getRemoteAddr();
 		
-		// VO 데이터 생성
+		// VO 데이터 수정
 		UserVO vo = new UserVO();
 		vo.setUid(uid);
 		vo.setPass(pass1);
@@ -54,13 +54,16 @@ public class RegisterController extends HttpServlet {
 		vo.setZip(zip);
 		vo.setAddr1(addr1);
 		vo.setAddr2(addr2);
-		vo.setRegip(regip);
+		int result = 0;
+		
+		if(vo.getPass().equals("") || vo.getPass() == null)
+			result = service.updateUser(vo);
 		
 		// 데이터베이스 처리
-		service.insertUser(vo);
+		service.updateUser(vo);
 		
 		// 리다이렉트
-		resp.sendRedirect("/Jboard2/user/login.do");
+		resp.sendRedirect("/Jboard2/list.do");
 		return;
 	}
 }

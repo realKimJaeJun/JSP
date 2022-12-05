@@ -29,7 +29,33 @@ public class Sql {
 	public static final String UPDATE_USER_FOR_SESSION = "UPDATE `board_user` SET `sessId` = ?, `sessLimitDate` = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE `uid`= ?";
 	public static final String UPDATE_USER_FOR_SESS_LIMIT_DATE = "UPDATE `board_user` SET `sessLimitDate` = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE `sessId`= ?";
 	public static final String UPDATE_USER_FOR_SESSION_OUT = "UPDATE `board_user` SET `sessId`= NULL, `sessLimitDate` = NULL WHERE `uid`= ?";
+	
+	public static final String UPDATE_USER = "update `board_user` set "
+											+ "`pass`=SHA2(?, 256), "
+											+ "`name`=?, "
+											+ "`nick`=?, "
+											+ "`email`=?, "
+											+ "`hp`=?, "
+											+ "`zip`=?, "
+											+ "`addr1`=?, "
+											+ "`addr2`=?, "
+											+ "`regip`=?, "
+											+ "`rdate`=NOW(), "
+											+ "where `uid`=?";
 		
+	public static final String DELETE_USER = "update `board_user` set "
+											+ "`pass`=null, "
+											+ "`name`=null, "
+											+ "`nick`=null, "
+											+ "`email`=null, "
+											+ "`hp`=null, "
+											+ "`zip`=null, "
+											+ "`addr1`=null, "
+											+ "`addr2`=null, "
+											+ "`regip`=null, "
+											+ "`rdate`=NOW(), "
+											+ "where `uid`=?";
+	
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set "
 												+ "`title`=?,"

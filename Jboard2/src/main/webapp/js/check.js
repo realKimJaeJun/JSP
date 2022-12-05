@@ -1,19 +1,8 @@
 /**
- * 날짜 : 2022/10/21
-   이름 : 김재준
-   내용 : 사용자 회원가입 유효성 검사 
+ * 
  */
-// 데이터 검증에 사용하는 정규표현식
-let regUid   = /^[a-z]+[a-z0-9]{5,19}$/g;
-let regPass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
-let regName  = /^[가-힣]+$/ 
-let regNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
-let regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-let regHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
-
-// 폼 데이터 검증 결과 상태변수
-// 폼 데이터 검증 결과 상태변수
-let isUidOk   = false;
+ 
+ let isUidOk   = false;
 let isPassOk  = false;
 let isNameOk  = false;
 let isNickOk  = false;
@@ -22,57 +11,12 @@ let isHpOk    = false;
 let isEmailAuthOk = false;
 let isEmailAuthCodeOk = false;
 let receivedCode = 0;	
+ 
+
 
 $(function(){
-	
-	// 아이디 유효성 검증 & 중복체크
-	$('input[name=uid]').keydown(function(){
-		isUidOk = false;
-	});
-	
-	$('#btnUidCheck').click(function(){
-		
-		let uid = $('input[name=uid]').val();
-		//alert(uid);
-		
-		if(isUidOk){
-			return;
-		}
-		
-		if(!uid.match(regUid)){
-			isUidOk = false;
-			$('.resultUid').css('color', 'red').text('아이디가 유효하지 않습니다.');
-			return;
-		}
-		
-		let jsonData = {"uid":uid};
-		
-		$('.resultUid').css('color', 'black').text('...');
-		
-		setTimeout(()=>{
-			
-			$.ajax({
-				url: '/Jboard2/user/checkUid.do',
-				method: 'get',
-				data: jsonData,
-				dataType: 'json',
-				success:function(data){
-					//console.log(data);
-					if(data.result == 0){
-						isUidOk = true;
-						$('.resultUid').css('color', 'green').text('사용 가능한 아이디 입니다.');
-					}else{
-						isUidOk = false;
-						$('.resultUid').css('color', 'red').text('이미 사용중인 아이디 입니다.');
-					}
-				}
-			});
-			
-		}, 500);
-	});		
-	
-	// 비밀번호 일치여부 확인
-	$('input[name=pass2]').focusout(function(){			
+ // 비밀번호 일치여부 확인
+	$('input[name=pass2]').change(function(){			
 		let pass1 = $('input[name=pass1]').val();
 		let pass2 = $(this).val();
 		
@@ -93,7 +37,7 @@ $(function(){
 	});
 	
 	// 이름 유효성 검증
-	$('input[name=name]').focusout(function(){
+	$('input[name=name]').change(function(){
 		
 		let name = $(this).val();
 		
@@ -152,7 +96,7 @@ $(function(){
 	});
 	
 	// 이메일 유효성 검사
-	$('input[name=email]').focusout(function(){
+	$('input[name=email]').change(function(){
 		let email = $(this).val();
 		
 		if(!email.match(regEmail)){
@@ -238,7 +182,7 @@ $(function(){
 	});
 	
 	// 휴대폰 유효성 검사
-	$('input[name=hp]').focusout(function(){
+	$('input[name=hp]').change(function(){
 		let hp = $(this).val();
 		
 		if(!hp.match(regHp)){
@@ -256,11 +200,6 @@ $(function(){
 		////////////////////////////////////
 		// 폼 데이터 유효성 검증(Validation)
 		////////////////////////////////////
-		// 아이디 검증
-		if(!isUidOk){
-			alert('아이디를 확인 하십시요.');
-			return false;
-		}
 		// 비밀번호 검증
 		if(!isPassOk){
 			alert('비밀번호를 확인 하십시요.');
@@ -296,6 +235,3 @@ $(function(){
 		return true;
 	});
 });
-
- 
- 

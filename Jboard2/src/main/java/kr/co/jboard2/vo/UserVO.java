@@ -88,5 +88,42 @@ public class UserVO {
 		this.rdate = rdate;
 	}
 	
+	public UserVO() {
+		System.out.println("UserVO 생성자 호출");
+	}
+	
+	public UserVO(String uid, String pass, String name, String nick, String email, String hp, int grade, String zip,
+			String addr1, String addr2, String regip) {
+		super();
+		this.uid = uid;
+		this.pass = pass;
+		this.name = name;
+		this.nick = nick;
+		this.email = email;
+		this.hp = hp;
+		this.grade = grade;
+		this.zip = zip;
+		this.addr1 = addr1;
+		this.addr2 = addr2;
+		this.regip = regip;
+	}
+	
+	public UserVO(String uid, String pass, String name, String nick, String email, String hp, int grade, String zip,
+			String addr1, String addr2, String regip, String rdate) {
+		super();
+		this.uid = uid;
+		this.pass = pass;
+		this.name = name;
+		this.nick = nick;
+		this.email = email;
+		this.hp = hp;
+		this.grade = grade;
+		this.zip = zip;
+		this.addr1 = addr1;
+		this.addr2 = addr2;
+		this.regip = regip;
+		this.rdate = rdate;
+	}
+	
 	
 }

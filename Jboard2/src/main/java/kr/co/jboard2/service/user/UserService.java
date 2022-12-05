@@ -1,5 +1,6 @@
 package kr.co.jboard2.service.user;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,6 +44,9 @@ public enum UserService {
 	public UserVO selectUser(String uid, String pass) {
 		return dao.selectUser(uid, pass);
 	}
+	public UserVO selectPass(String pass) {
+		return dao.selectPass(pass);
+	}
 	public UserVO selectUserForFindId(String name, String email) {
 		return dao.selectUserForFindId(name, email);
 	}
@@ -54,7 +58,9 @@ public enum UserService {
 		return dao.selectUserBySessId(sessId);
 	}
 	public void selectUsers() {}
-	public void updateUser() {}
+	public void updateUser(UserVO vo) {
+		dao.updateUser(vo);
+	}
 	public int updateUserPassword(String uid, String pass) {
 		return dao.updateUserPassword(uid, pass);
 	}
@@ -67,7 +73,9 @@ public enum UserService {
 	public void updateUserForSessionOut(String uid) {
 		dao.updateUserForSessionOut(uid);
 	}
-	public void deleteUser() {}
+	public int deleteUser(String uid) {
+		return dao.deleteUser(uid);
+	}
 	
 
 	public int[] sendEmailCode(String receiver) {

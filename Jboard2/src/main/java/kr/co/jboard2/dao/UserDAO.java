@@ -1,5 +1,9 @@
 package kr.co.jboard2.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +15,7 @@ import kr.co.jboard2.vo.UserVO;
 public class UserDAO extends DBHelper {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	
 	public void insertUser(UserVO vo) {
 		try {
@@ -145,6 +150,38 @@ public class UserDAO extends DBHelper {
 		return vo;
 	}
 	
+public UserVO selectPass(String pass) {
+		
+		UserVO vo = null;
+		try {
+			logger.info("selectPass...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER);
+			psmt.setString(1, pass);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new UserVO();
+				vo.setUid(rs.getString(1));
+				vo.setPass(rs.getString(2));
+				vo.setName(rs.getString(3));
+				vo.setNick(rs.getString(4));
+				vo.setEmail(rs.getString(5));
+				vo.setHp(rs.getString(6));
+				vo.setGrade(rs.getInt(7));
+				vo.setZip(rs.getString(8));
+				vo.setAddr1(rs.getString(9));
+				vo.setAddr2(rs.getString(10));
+				vo.setRegip(rs.getString(11));
+				vo.setRdate(rs.getString(12));
+			}
+			close();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
 	public UserVO selectUserForFindId(String name, String email) {
 		
 		UserVO vo = null;
@@ -230,7 +267,31 @@ public class UserDAO extends DBHelper {
 		return vo;
 	}
 	public void selectUsers() {}
-	public void updateUser() {}
+
+	public void updateUser(UserVO vo) {
+		try {
+			logger.info("updateUser...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER);
+			psmt.setString(1, vo.getPass());
+			psmt.setString(2, vo.getName());
+			psmt.setString(3, vo.getNick());
+			psmt.setString(4, vo.getEmail());
+			psmt.setString(5, vo.getHp());
+			psmt.setString(6, vo.getZip());
+			psmt.setString(7, vo.getAddr1());
+			psmt.setString(8, vo.getAddr2());
+			psmt.setString(9, vo.getRegip());
+			psmt.setString(10, vo.getUid());
+			psmt.executeUpdate();
+			close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	public int updateUserPassword(String uid, String pass) {
 		
 		int result = 0;
@@ -298,6 +359,20 @@ public class UserDAO extends DBHelper {
 		}
 	}
 	
-	public void deleteUser() {}
+	public int deleteUser(String uid) {
+		int result = 0;
+		try {
+			logger.info("deleteUser...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.DELETE_USER);
+			result = psmt.executeUpdate();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }
