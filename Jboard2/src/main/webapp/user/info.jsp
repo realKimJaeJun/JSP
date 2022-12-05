@@ -7,13 +7,18 @@
 		$('.btnNext').click(function(e){
 			e.preventDefault();
 			
+			const uid = $('input[name=uid]').val();
 			const pass = $('input[name=pass]').val();
-			const uid = "${sessUser.uid}";
+			
+			let jsonData = {
+					"pass":pass,
+					"uid":uid
+			};
 			
 			$.ajax({
 				url: '/Jboard2/user/info.do',
 				type: 'post',
-				data: {"uid":uid,"pass":pass},
+				data: jsonData,
 				dataType: 'json',
 				success: function(data){
 					
@@ -21,7 +26,6 @@
 						location.href = "/Jboard2/user/myInfo.do";
 					}else{
 						alert('비밀번호가 일치하지 않습니다.');
-						 return false;
 					}
 					
 				}
@@ -35,6 +39,7 @@
 <main id="user">
     <section class="find findId">
         <form action="/Jboard2/user/info.do">
+        <input type="hidden" name="uid" value="${sessUser.uid }">
             <table border="0">
                 <caption>비밀번호 확인</caption>
                 <tr>
