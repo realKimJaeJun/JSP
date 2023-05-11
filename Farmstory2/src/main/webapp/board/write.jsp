@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../_header.jsp"/>
-<jsp:include page="./_${group}.jsp"/>
+<jsp:include page="../_header.jsp"></jsp:include>
 <main id="board">
     <section class="write">
 
-        <form action="/Farmstory2/board/write.do" method="post" enctype="multipart/form-data">
-        	<input type="hidden" name="uid" value="${sessUser.uid}"/>
-            <table border="0">
+        <form action="/Farmstory2/user/write.do?" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="cate" value="${ param.cate }">
+        	<input type="hidden" name="tit" value="${ param.tit }">
+            <table>
                 <caption>글쓰기</caption>
                 <tr>
                     <th>제목</th>
@@ -21,20 +21,17 @@
                 <tr>
                     <th>파일</th>
                     <td>
-                        <input type="file" name="fname"/>
+                        <input type="file" name="file"/>
                     </td>
                 </tr>
             </table>
             
             <div>
-                <a href="./list.do?group=${group}&cate=${cate}" class="btn btnCancel">취소</a>
+                <a href="/Farmstory2/user/list.do?cate=${ param.cate }&tit=${ param.tit }" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>
 
     </section>
 </main>
-</article>
-    </section>
-</div>
-<jsp:include page="../_footer.jsp"/>
+<jsp:include page="../_footer.jsp"></jsp:include>

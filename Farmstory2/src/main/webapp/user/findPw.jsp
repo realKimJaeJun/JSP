@@ -1,51 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../_header.jsp"/>
-<script src="/Farmstory2/js/emailAuth.js"></script>
-<script>
-	
-	$(function(){
-		
-		$('.btnNext').click(function(e){
-			e.preventDefault();
-			
-			if(!isEmailAuthOk){
-				alert('이메일 인증을 하십시요.');
-				return;
-			}
-			
-			let uid  = $('input[name=uid]').val();
-			let email = $('input[name=email]').val();
-			
-			let jsonData = {
-				"uid": uid,
-				"email": email
-			};
-			
-			$.ajax({
-				url: '/Farmstory2/user/findPw.do',
-				type: 'post',
-				data: jsonData,
-				dataType: 'json',
-				success: function(data){
-					
-					if(data.result > 0){
-						location.href = "/Farmstory2/user/findPwChange.do";
-					}else{
-						alert('일치하는 회원이 없습니다.\n아이디와 이메일을 다시 확인 하시기 바랍니다.');
-					}
-					
-				}
-			});
-			
-		});
-		
-	});
-
-</script>
+<jsp:include page="../_header.jsp"></jsp:include>
+<script src="../js/find.js"></script>
 <main id="user">
     <section class="find findPw">
         <form action="#">
-            <table border="0">
+            <table>
                 <caption>비밀번호 찾기</caption>                        
                 <tr>
                     <td>아이디</td>
@@ -54,14 +13,14 @@
                 <tr>
                     <td>이메일</td>
                     <td>
+                    	<span id="message"></span>
                         <div>
                             <input type="email" name="email" placeholder="이메일 입력"/>
-                            <span class="resultEmail"></span>
-                            <button type="button" class="btnAuth" id="btnEmail">인증번호 받기</button>
+                            <button type="button" class="btnAuth">인증번호 받기</button>
                         </div>
                         <div>
-                            <input type="text" name="auth" placeholder="인증번호 입력"/>
-                            <button type="button" class="btnConfirm" id="btnEmailConfirm">확인</button>
+                            <input type="text" name="auth" disabled placeholder="인증번호 입력"/>
+                            <button type="button" class="btnConfirm">확인</button>
                         </div>
                     </td>
                 </tr>                        
@@ -80,4 +39,4 @@
         </div>
     </section>
 </main>
-<jsp:include page="../_footer.jsp"/>
+<jsp:include page="../_footer.jsp"></jsp:include>

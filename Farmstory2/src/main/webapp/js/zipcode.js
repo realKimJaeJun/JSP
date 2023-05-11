@@ -1,8 +1,10 @@
 /**
- * 다음 주소 API
+	날짜 : 2022/10/21
+	이름 : 김재준
+	내용 : 다음 주소 찾기
  */
 function zipcode() {
-    new daum.Postcode({
+	new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 

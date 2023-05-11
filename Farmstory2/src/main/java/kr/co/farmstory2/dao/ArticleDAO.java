@@ -1,185 +1,116 @@
-package kr.co.farmstory2.dao;
+package kr.co.Farmstory2.dao;
 
-import java.sql.PreparedStatement;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import kr.co.Farmstory2.db.DBCP;
+import kr.co.Farmstory2.db.Sql;
+import kr.co.Farmstory2.service.FileService;
+import kr.co.Farmstory2.vo.FileVO;
+import kr.co.Farmstory2.vo.articleVO;
 
-import kr.co.farmstory2.db.DBHelper;
-import kr.co.farmstory2.db.Sql;
-import kr.co.farmstory2.vo.ArticleVO;
-import kr.co.farmstory2.vo.FileVO;
+public class ArticleDAO extends DBCP {
 
-// DAO(Data Access Object) : 데이터베이스 처리 클래스
-public class ArticleDAO extends DBHelper {
+	private FileService service = FileService.INSTANCE;
 	
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	//====== list ======//
-	/*** 검색 조건에 해당하는 게시판 전체 개수 구하는 메서드 ***/
-	public int countArticles(Map<String, Object> map) {
-		int totalCount = 0; // 전체 게시물 저장 변수 
-		
+	// create
+	/**
+	 * 글작성 - 글 정보 저장
+	 * @param vo
+	 * @param fileName
+	 * @param saveDirectory
+	 */
+	public void insertArticle(articleVO vo, String fileName, String saveDirectory) {
 		try {
+			logger.info("insertArticle...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
 			
-			logger.info("countArticles...");
+			psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
+			stmt = conn.createStatement();
 			
-			String searchField = (String)map.get("searchField");
-			String searchWord = (String)map.get("searchWord");
-			String group = (String)map.get("group");
-			String cate = (String)map.get("cate");
-		
-			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT COUNT(a.`no`) FROM `board_article` a JOIN `board_user` u "
-						+ "ON a.`uid` = u.`uid` "
-						+ "WHERE `parent` = 0  AND `cate` = '" + group + cate + "'");
-			if(searchWord != null) {                                // 검색 단어가 있을 경우
-				if("nick".equals(searchField)) { 					// 검색 필드가 nick인 경우
-					sql.append(" AND u.`" + searchField  + "` ");
-				} else {											// 검색 필드가 title, content인 경우
-					sql.append(" AND a.`" + searchField  + "` ");
-				}
+			psmt.setString(1, vo.getTitle());
+			psmt.setString(2, vo.getContent());
+			psmt.setString(3, vo.getCate());
+			psmt.setInt(4, fileName == null ? 0 : 1);
+			psmt.setString(5, vo.getUid());
+			psmt.setString(6, vo.getRegip());
+			
+			psmt.executeUpdate();
+			rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
+			
+			conn.commit();
+			
+			int parent = 0;
+			if (rs.next()) parent = rs.getInt(1);
+			
+			if(fileName != null) {
+				// 첨부 파일이 있을 경우 파일명 변경
+				// 새로운 파일명 생성
+				String now = new SimpleDateFormat("yyyyMMddHHmmss_").format(new Date());
+				String ext = fileName.substring(fileName.lastIndexOf("."));
+				String newFileName = now + vo.getUid() + ext;
 				
-				sql.append("LIKE '%" + searchWord   + "%'");  
-			}
+				// 파일명 변경
+				File oldFile = new File(saveDirectory + File.separator + fileName);
+				File newFile = new File(saveDirectory + File.separator + newFileName);
+				oldFile.renameTo(newFile);
 				
-		
-			con = getConnection();
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql.toString());
-			if(rs.next()) {
-				totalCount = rs.getInt(1);
+				// 파일 테이블 Insert
+				service.insertFile(parent, newFileName, fileName);
 			}
 			
 			close();
-		
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		}
-		logger.debug("totalCount : " + totalCount);
-		return totalCount;
-	};
-	
-	/*** 검색 조건에 맞는 게시물 목록을 반환하는 메서드 ***/
-	public Map<String, Object> selectListPage(Map<String, Object> map){
-		List<ArticleVO> lists = null;
-		
-		String group = (String)map.get("group");
-		String cate = (String)map.get("cate");
-		
-		String sql = "SELECT a.*, u.`nick` FROM `board_article` a JOIN "
-				   + "`board_user` u ON a.`uid` = u.`uid` "
-				   + "WHERE `parent`=0   AND `cate` = '" + group + cate + "'";
-		
-		// 검색 조건이 있다면 WHERE절 추가
-		if(map.get("searchField") != null) {
-			sql += " AND `" + map.get("searchField") + "` LIKE '%" + map.get("searchWord") + "%' ";
-		}
-		
-		sql += " ORDER BY `no` desc  LIMIT ?, 10";
-		
-		try {
-			logger.info("selectListPage...");
-			con = getConnection();
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, (int)map.get("limitStart"));
-			lists = new ArrayList<>();
-			
-			rs = psmt.executeQuery();
-			
-			while(rs.next()) {
-				ArticleVO vo = new ArticleVO();
-				vo.setNo(rs.getInt(1));
-				vo.setParent(rs.getInt(2));
-				vo.setComment(rs.getInt(3));
-				vo.setCate(rs.getString(4));			
-				vo.setTitle(rs.getString(5));			
-				vo.setContent(rs.getString(6));			
-				vo.setFile(rs.getInt(7));			
-				vo.setHit(rs.getInt(8));			
-				vo.setUid(rs.getString(9));			
-				vo.setRegip(rs.getString(10));			
-				vo.setRdate(rs.getString(11).substring(2, 10));
-				vo.setNick(rs.getString(12));
-				
-				lists.add(vo);
-			}
-			
-			map.put("articles", lists);
-			close();
-			
-		} catch (Exception e) {
+		} catch(Exception e) {
 			logger.error(e.getMessage());
 		}
-				
-		logger.debug("map : " + map);
-		return map;
 	}
 	
-	//====== write ======//
-	/*** 글을 등록하는 메서드 ***/
-	public int insertArticleAndFile(ArticleVO aVo, FileVO fVo) {
+	/**
+	 * 댓글작성 - 댓글 정보 저장
+	 * @param vo
+	 * @return
+	 */
+	public int insertComment(articleVO vo) {
 		int result = 0;
 		try {
-			logger.info("insertArticle");
-			con = getConnection();
-			
-			con.setAutoCommit(false);
-			psmt = con.prepareStatement(Sql.INSERT_ARTICLE);
-			psmt.setString(1, aVo.getCate());
-			psmt.setString(2, aVo.getTitle());
-			psmt.setString(3, aVo.getContent());
-			psmt.setInt(4, aVo.getFile());
-			psmt.setString(5, aVo.getUid());
-			psmt.setString(6, aVo.getRegip());
-			
+			logger.info("insertComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, vo.getParent());
+			psmt.setString(2, vo.getContent());
+			psmt.setString(3, vo.getUid());
+			psmt.setString(4, vo.getRegip());
 			result = psmt.executeUpdate();
-			
-			PreparedStatement insertFilePsmt = null;
-			if(fVo != null) {
-				insertFilePsmt = con.prepareStatement(Sql.INSERT_FILE);
-				insertFilePsmt.setString(1, fVo.getNewName());
-				insertFilePsmt.setString(2, fVo.getOriName());
-				result = insertFilePsmt.executeUpdate();
-			}
-			
-			con.commit();
-			
-			insertFilePsmt.close();
 			close();
-			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		
-		
-		logger.debug("result : " + result);
 		return result;
-	};
+	}
 	
-	//====== view ======//
-	/*** 조건에 해당하는 게시물을 가져오는 메서드 ***/
-	public Map<String, Object> selectArticle(int no) {
-		Map<String, Object> map = null;
-		List<ArticleVO> comments = null;
-		ArticleVO vo = null;
+	// read
+	public List<articleVO> selectArticles(String cateName, int limitStart, String search) {
+		List<articleVO> avos = new ArrayList<>();
+		String word = "";
+		if (search != null) word = "%"+search+"%";
+		else word = "%%";
 		try {
 			logger.info("selectArticle...");
-			con = getConnection();
-			psmt = con.prepareStatement(Sql.SELECT_ARTICLE);
-			psmt.setInt(1, no);
-			psmt.setInt(2, no);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
+			psmt.setString(1, cateName);
+			psmt.setString(2, word);
+			psmt.setString(3, word);
+			psmt.setInt(4, limitStart);
 			rs = psmt.executeQuery();
-			comments = new ArrayList<>();
-			map = new HashMap<>();
-			
 			while(rs.next()) {
-				vo = new ArticleVO();
+				articleVO vo = new articleVO();
 				vo.setNo(rs.getInt(1));
 				vo.setParent(rs.getInt(2));
 				vo.setComment(rs.getInt(3));
@@ -191,262 +122,347 @@ public class ArticleDAO extends DBHelper {
 				vo.setUid(rs.getString(9));
 				vo.setRegip(rs.getString(10));
 				vo.setRdate(rs.getString(11).substring(2, 10));
-				vo.setFileName(rs.getString(12));
-				vo.setDownload(rs.getInt(13));
-				vo.setNick(rs.getString(14));
-				if(vo.getNo() == no) {
-					map.put("board", vo);
-					logger.debug("board : " + vo);
-				} else if(vo.getParent() != 0) {
-					comments.add(vo);
-				}
+				vo.setNick(rs.getString(12));
+				avos.add(vo);
 			}
-			
-			map.put("comments", comments);
 			close();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		
-		logger.debug("map : " + map);
-		logger.debug("comments : " + comments);
-		return map;
-	};
-	
-	/*** 조건에 해당하는 게시물 조회수를 올리는 메서드 ***/
-	public int plusHit(int no) {
-		int result = 0;
-		try {
-			logger.info("plusHit...");
-			con = getConnection();
-			psmt = con.prepareStatement(Sql.PLUS_HIT);
-			psmt.setInt(1, no);
-			result = psmt.executeUpdate();
-			
-			close();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		
-		return result;
+		return avos;
 	}
 	
-	//====== view - download ======//
-	/*** 조건에 해당하는 파일을 가져오는 메서드 ***/
-	public FileVO selectFile(int no) {
-		FileVO vo = null;
-		
+	/**
+	 * view - 게시물 정보 불러오기 (글 정보, 파일 정보)
+	 * @param no
+	 * @return
+	 */
+	public Map<String, Object> selectArticle(String no) {
+		Map<String, Object> vos = new HashMap<>();
+		articleVO avo = new articleVO();
+		FileVO fvo = new FileVO();
 		try {
-			logger.info("selectFile...");
-			con = getConnection();
-			psmt = con.prepareStatement(Sql.SELECT_FILE);
-			psmt.setInt(1, no);
-			
+			logger.info("selectArticle...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt.setString(1, no);
 			rs = psmt.executeQuery();
-			
 			if(rs.next()) {
-				vo = new FileVO();
-				vo.setFno(rs.getInt(1));
-				vo.setParent(rs.getInt(2));
-				vo.setNewName(rs.getString(3));
-				vo.setOriName(rs.getString(4));
-				vo.setDownload(rs.getInt(5));
+				avo.setNo(rs.getInt(1));
+				avo.setParent(rs.getInt(2));
+				avo.setComment(rs.getInt(3));
+				avo.setCate(rs.getString(4));
+				avo.setTitle(rs.getString(5));
+				avo.setContent(rs.getString(6));
+				avo.setFile(rs.getInt(7));
+				avo.setHit(rs.getInt(8));
+				avo.setUid(rs.getString(9));
+				avo.setRegip(rs.getString(10));
+				avo.setRdate(rs.getString(11));
+				fvo.setFno(rs.getInt(12));
+				fvo.setParent(rs.getInt(13));
+				fvo.setNewName(rs.getString(14));
+				fvo.setOriName(rs.getString(15));
+				fvo.setDownload(rs.getInt(16));
 			}
-			
 			close();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		logger.debug("vo : " + vo);
+		vos.put("avo", avo);
+		vos.put("fvo", fvo);
+		return vos;
+	}
+	
+	/**
+	 * index - latests 게시물 정보 불러오기
+	 * @param cate1
+	 * @param cate2
+	 * @param cate3
+	 * @return
+	 */
+	public List<articleVO> selectArticleLatests(String cate1, String cate2, String cate3) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectArticleLatests...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LATESTS);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setCate(rs.getString("cate"));
+				vo.setTitle(rs.getString("title"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
+	/**
+	 * index - latest 게시물 정보 불러오기
+	 * @param cate
+	 * @return
+	 */
+	public List<articleVO> selectarticlelatest(String cate) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectarticlelatest...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LATEST);
+			psmt.setString(1, cate);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setTitle(rs.getString("title"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
+	/**
+	 * view - 댓글들 정보 불러오기
+	 * @param parent
+	 * @return
+	 */
+	public List<articleVO> selectArticleComment(String parent) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectArticleComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_COMMENTS);
+			psmt.setString(1, parent);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setParent(rs.getInt("parent"));
+				vo.setCate(rs.getString("cate"));
+				vo.setContent(rs.getString("content"));
+				vo.setUid(rs.getString("uid"));
+				vo.setRegip(rs.getString("regip"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vo.setNick(rs.getString("nick"));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
+	/**
+	 * 카테고리별 전체 게시물 갯수 + 검색기능
+	 * @param search
+	 * @param cateName
+	 * @return
+	 */
+	public int selectCountArticles(String search, String titName) {
+		int total = 0;
+		String word = "";
+		if (search != null) word = "%"+search+"%";
+		else word = "%%";
+		try {
+			logger.info("selectCountArticles...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_ARTICLES);
+			psmt.setString(1, titName);
+			psmt.setString(2, word);
+			psmt.setString(3, word);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return total;
+	}
+	
+	// upload
+	/**
+	 * modify - 게시글 수정
+	 * @param title
+	 * @param content
+	 * @param no
+	 */
+	public void updateArticle(String title, String content, String no) {
+		try {
+			logger.info("updateArticle...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
+	 * view - 게시물 조회수 증가
+	 * @param no
+	 */
+	public void updateHitCount(String no) {
+		try {
+			logger.info("updateHitCount...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT_PLUS);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
+	 * 댓글작성 - 댓글 갯수 증가, 마지막 댓글의 작성시간 and 등록 번호 return
+	 * @param no
+	 * @return
+	 */
+	public articleVO updateCommnetPlus(int no) {
+		articleVO vo = new articleVO();
+		try {
+			logger.info("updateCommnetPlus...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
+			psmt.setInt(1, no);
+			psmt.executeUpdate();
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.SELECT_ARTICLE_LAST_COMMENT_TIME);
+			if(rs.next()) {
+				vo.setRdate(rs.getString("rdate"));
+				vo.setNo(rs.getInt("no"));
+			}
+			
+			conn.commit();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		return vo;
 	}
 	
-	/*** 파일 다운로드 수 +1 ***/
-	public void plusDownload(int no) {
-		try {
-			logger.info("plusDownload...");
-			con = getConnection();
-			psmt = con.prepareStatement(Sql.PLUS_DOWNLOAD);
-			psmt.setInt(1, no);
-			
-			psmt.executeUpdate();
-			
-			close();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-	}
-	
-	//====== delelte ======//
-	/*** 조건에 해당하는 게시판 및 관련 파일, 댓글을 삭제하는 메서드 ***/
-	public Map<String, Object> deleteArticle(int no) {
-		Map<String, Object> map = null;
- 		int result = 0;
- 		String newName = null;
- 		
-		try {
-			logger.info("deleteArticle...");
-			
-			con = getConnection();
-			con.setAutoCommit(false);
-			
-			PreparedStatement selectPsmt = con.prepareStatement(Sql.SELECT_FILE);
-			selectPsmt.setInt(1, no);
-			
-			rs = selectPsmt.executeQuery();
-			if(rs.next()) {
-				newName = rs.getString("newName");
-			}
-				
-			psmt = con.prepareStatement(Sql.DELETE_ARTICLE);
-			psmt.setInt(1, no);
-			psmt.setInt(2, no);
-			
-			result = psmt.executeUpdate();
-			
-			con.commit();
-			
-			map = new HashMap<>();
-			map.put("newName", newName);
-			map.put("result", result);
-			
-			close();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.debug("map : " + map);
-		return map;
-	};
-	
-	//====== update ======//
-	/*** 글을 수정하는 메서드 ***/
-	public int updateArticleAndFile(ArticleVO aVo, FileVO fVo, boolean newSave) {
+	/**
+	 * 댓글수정 - 댓글수정 기능
+	 * @param content
+	 * @param no
+	 * @return
+	 */
+	public int updateComment(String content, int no) {
 		int result = 0;
 		try {
-			logger.info("updateArticleAndFile...");
-			con = getConnection();
-			
-			con.setAutoCommit(false);
-			String sql = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() ";
-			if(newSave) {
-				sql += ", `file`=1 ";
-			}
-			sql += "WHERE `no`=? ";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, aVo.getTitle());
-			psmt.setString(2, aVo.getContent());
-			psmt.setInt(3, aVo.getNo());
-			
+			logger.info("updateComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setInt(2, no);
 			result = psmt.executeUpdate();
-			
-			PreparedStatement updateFilePsmt = null;
-			PreparedStatement insertFilePsmt = null;
-			if(fVo != null) {
-				if(!newSave) {
-					updateFilePsmt = con.prepareStatement(Sql.UPDATE_FILE);
-					updateFilePsmt.setString(1, fVo.getNewName());
-					updateFilePsmt.setString(2, fVo.getOriName());
-					updateFilePsmt.setInt(3, aVo.getNo());
-					result = updateFilePsmt.executeUpdate();
-					
-				} else {
-					insertFilePsmt = con.prepareStatement(Sql.UPDATE_ADD_FILE);
-					insertFilePsmt.setInt(1, aVo.getNo());
-					insertFilePsmt.setString(2, fVo.getNewName());
-					insertFilePsmt.setString(3, fVo.getOriName());
-					result = insertFilePsmt.executeUpdate();
-				}
-			}
-			
-			con.commit();
-			
-			updateFilePsmt.close();
-			insertFilePsmt.close();
 			close();
-			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		
-		logger.debug("result : " + result);
 		return result;
-	};
-	
-	//====== index ======//
-	/*** 글을 수정하는 메서드 ***/
-	public Map<String, Object> selectArticles() {
-		Map<String, Object> map = null;
-		List<ArticleVO> croptalk1 = null;
-		List<ArticleVO> croptalk2 = null;
-		List<ArticleVO> croptalk3 = null;
-		List<ArticleVO> community1 = null;
-		List<ArticleVO> community4 = null;
-		List<ArticleVO> community5 = null;
-		
-		try {
-			logger.info("insertArticles...");
-			con = getConnection();
-			stmt = con.createStatement();
-			map = new HashMap<>();
-			rs = stmt.executeQuery(Sql.SELECT_ARTICLES);
-			croptalk1 = new ArrayList<>();
-			croptalk2 = new ArrayList<>();
-			croptalk3 = new ArrayList<>();
-			community1 = new ArrayList<>();
-			community4 = new ArrayList<>();
-			community5 = new ArrayList<>();
-			while(rs.next()) {
-				ArticleVO vo = new ArticleVO();
-				vo.setNo(rs.getInt("no"));
-				String cate = rs.getString("cate");
-				System.out.println(cate);
-				vo.setCate(removeString(cate));
-				vo.setGroup(removeNumber(cate));
-				vo.setTitle(rs.getString("title"));
-				vo.setRdate(rs.getString("rdate").substring(2, 10));
-				switch(cate) {
-					case "croptalk1": 
-						croptalk1.add(vo); break;
-					case "croptalk2": 
-						croptalk2.add(vo); break;
-					case "croptalk3": 
-						croptalk3.add(vo); break;
-					case "community1": 
-						community1.add(vo); break;
-					case "community4": 
-						community4.add(vo); break;
-					case "community5": 
-						community5.add(vo); break;
-				}
-				
-			}
-			
-			map.put("croptalk1", croptalk1);
-			map.put("croptalk2", croptalk2);
-			map.put("croptalk3", croptalk3);
-			map.put("community1", community1);
-			map.put("community4", community4);
-			map.put("community5", community5);
-			
-			close();
-			
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.debug("map : " + map);
-		return map;
 	}
 	
-	public String removeNumber(String str){
-        String match = "[0-9]";
-        str = str.replaceAll(match, "");
-        return str;
-    }
+	/**
+	 * 댓글삭제 - 댓글삭제시 댓글 갯수 감소 기능
+	 * @param parent
+	 */
+	public void uploadArticleCommentMinus(String parent) {
+		try {
+			logger.info("uploadArticleCommentMinus...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			psmt.setString(1, parent);
+			psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	
-	public String removeString(String str){
-		String match = "[^0-9]";
-        str = str.replaceAll(match, "");
-        return str;
-    }
+	// delete
+	/**
+	 * 댓글삭제 - 댓글삭제 기능
+	 * @param no
+	 * @return
+	 */
+	public int deleteComment(int no) {
+		int result = 0;
+		try {
+			logger.info("deleteComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE_COMMENT);
+			psmt.setInt(1, no);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	/**
+	 * 게시물 삭제 - 게시물, 댓글, 파일 삭제 기능
+	 * @param no
+	 * @param fileCheck
+	 * @param path
+	 */
+	public void deleteArticle(String no, int fileCheck, String path) {
+		try {
+			logger.info("deleteArticle...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			String fileName = null;
+			
+			if(fileCheck > 0) {
+				psmt = conn.prepareStatement(Sql.SELECT_FILE);
+				psmt.setString(1, no);
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					fileName = rs.getString("newName");
+				}
+				if(fileName != null) {
+					File file = new File(path, fileName);
+					if(file.exists()) {
+						file.delete();
+					}
+				}
+			}
+			
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			conn.commit();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	
 }

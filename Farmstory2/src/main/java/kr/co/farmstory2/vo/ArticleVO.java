@@ -1,7 +1,6 @@
-package kr.co.farmstory2.vo;
+package kr.co.Farmstory2.vo;
 
-public class ArticleVO {
-
+public class articleVO {
 	private int no;
 	private int parent;
 	private int comment;
@@ -14,33 +13,25 @@ public class ArticleVO {
 	private String regip;
 	private String rdate;
 	
-	// user 추가필드
-	private String nick; 
+	private String nick;
 	
-	// file 추가필드
-	private String fileName;
-	private int download;
-	
-	// index (참고) 
-	private String group;
-	
-	public String getGroup() {
-		return group;
-	}
-	public void setGroup(String group) {
-		this.group = group;
-	}
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
 	}
+	public void setNo(String no) {
+		this.no = Integer.parseInt(no);
+	}
 	public int getParent() {
 		return parent;
 	}
 	public void setParent(int parent) {
 		this.parent = parent;
+	}
+	public void setParent(String parent) {
+		this.parent = Integer.parseInt(parent);
 	}
 	public int getComment() {
 		return comment;
@@ -102,18 +93,4 @@ public class ArticleVO {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	public int getDownload() {
-		return download;
-	}
-	public void setDownload(int download) {
-		this.download = download;
-	}
-	
 }
-	

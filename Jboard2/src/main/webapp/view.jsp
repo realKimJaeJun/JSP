@@ -146,25 +146,25 @@
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title" readonly value="${article.title}"/></td>
+                <td><input type="text" name="title" readonly value="${param.title}"/></td>
             </tr>
-            <c:if test="${article.file > 0}">
+            <c:if test="${param.file > 0}">
             <tr>
                 <th>파일</th>
-                <td><a href="/Jboard2/view.do?parent=${article.no}">${article.oriName}</a>&nbsp;<span>${article.download}</span>회 다운로드</td>
+                <td><a href="/Jboard2/view.do?parent=${param.no}">${param.oriName}</a>&nbsp;<span>${param.download}</span>회 다운로드</td>
             </tr>
             </c:if>
             <tr>
                 <th>내용</th>
                 <td>
-                    <textarea name="content" readonly>${article.content}</textarea>
+                    <textarea name="content" readonly>${param.content}</textarea>
                 </td>
             </tr>                    
         </table>
         <div>
-        	<c:if test="${sessUser.uid.equals(article.uid)}">
+        	<c:if test="${sessUser.uid.equals(param.uid)}">
             <a href="#" class="btn btnRemove">삭제</a>
-            <a href="/Jboard2/modify.do?no=${article.no}&pg=${article.pg}" class="btn btnModify">수정</a>
+            <a href="/Jboard2/modify.do?no=${param.no}&pg=${param.pg}" class="btn btnModify">수정</a>
             </c:if>
             <a href="/Jboard2/list.do" class="btn btnList">목록</a>
         </div>

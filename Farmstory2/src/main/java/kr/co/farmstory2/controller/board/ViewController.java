@@ -1,9 +1,7 @@
-package kr.co.farmstory2.controller.board;
+package kr.co.Farmstory2.controller.board;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
-import java.util.StringJoiner;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,60 +9,49 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonObject;
 
-import kr.co.farmstory2.service.board.ArticleService;
-
+import kr.co.Farmstory2.service.BoardService;
+import kr.co.Farmstory2.vo.FileVO;
+import kr.co.Farmstory2.vo.articleVO;
+import kr.co.Farmstory2.vo.userVO;
 
 @WebServlet("/board/view.do")
 public class ViewController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private ArticleService service = ArticleService.INSTANCE;
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	@Override
-	public void init() throws ServletException {}
+	private BoardService service = BoardService.INSTANCE;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		logger.info("ViewController...");
+		String no = req.getParameter("no");
 		
-		int no = Integer.parseInt(req.getParameter("no"));   // 게시글 번호
-		Map<String, Object> map = service.selectArticle(no); // 게시글 정보를 가져오는 서비스
+		Map<String, Object> vos = service.selectArticle(no); // 게시물 불러오기
+		articleVO avo = (articleVO)vos.get("avo");
 		
-		// no=xxx 쿼리스트링을 제거하는 작업
-		String queryString = req.getQueryString();
-		String[] arr = queryString.split("&");
-		StringJoiner joiner = new StringJoiner("&");
-		for(int i=1; i<arr.length; i++) {
-			joiner.add(arr[i]);
+		// 로그인한 아이디와 게시글의 글쓴이의 아이디가 같지 않을때 게시물 조회수 증가
+		if (!((userVO)req.getSession().getAttribute("sessUser")).getUid().equals(avo.getUid())) {
+			service.updateHitCount(no);
 		}
 		
-		req.setAttribute("no", no);											// 게시글 번호
-		req.setAttribute("joiner", joiner.toString());						// no=xxx를 제거한 쿼리스트링
-		req.setAttribute("queryString", req.getQueryString());  			// no를 포함한 전체 쿼리스트링
-		req.setAttribute("group", req.getParameter("group"));   			// 그룹
-		req.setAttribute("cate", req.getParameter("cate"));    				// 카테고리
-		req.setAttribute("searchField", req.getParameter("searchField"));	// 검색 필드
-		req.setAttribute("searchWord", req.getParameter("searchWord"));		// 검색 단어
-		req.setAttribute("pageNum", req.getParameter("pageNum"));			// 페이지 번호
-		req.setAttribute("map", map);										// 게시글 정보를 담고 있는 map 
+		req.setAttribute("avo", avo); // 게시물 정보
+		req.setAttribute("avo2", service.selectArticleComment(no)); // 댓글 불러오기
+		req.setAttribute("fvo", (FileVO)vos.get("fvo")); // 파일 정보
+		
 		req.getRequestDispatcher("/board/view.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int no = Integer.parseInt(req.getParameter("no"));
-		int result = service.plusHit(no); // 게시글 조회수 +1					
+		resp.setContentType("text/html;charset=UTF-8");
 		
-		resp.setContentType("json/application;charset=UTF-8");
-		JsonObject json = new JsonObject();
-		json.addProperty("result", result);
-		PrintWriter writer = resp.getWriter();
-		writer.print(json.toString());
+		// 작성한 댓글 정보 저장
+		articleVO vo = service.saveArticleVO(req);
+		
+		// type에 따라 작업 처리
+		JsonObject json = service.commentWorkForType(req.getParameter("type"), vo, req.getParameter("parent"));
+		
+		// 출력
+		resp.getWriter().print(json.toString());
 	}
 }

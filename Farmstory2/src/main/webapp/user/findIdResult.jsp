@@ -1,25 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../_header.jsp"/>
+<jsp:include page="../_header.jsp"></jsp:include>
 <main id="user">
     <section class="find findIdResult">
         <form action="#">
-            <table border="0">
+            <table>
                 <caption>아이디 찾기 결과</caption>
                 <tr>
                     <td>이름</td>
-                    <td>${sessUserForId.name}</td>
+                    <td>${ vo.name }</td>
                 </tr>
                 <tr>
                     <td>아이디</td>
-                    <td>${sessUserForId.uid}</td>
+                    <td>${ vo.nick }</td>
                 </tr>
                 <tr>
                     <td>이메일</td>
-                    <td>${sessUserForId.email}</td>
+                    <td>${ vo.email }</td>
                 </tr>
                 <tr>
                     <td>가입일</td>
-                    <td>${sessUserForId.rdate}</td>
+                    <td>${ vo.rdate }</td>
                 </tr>
             </table>                                        
         </form>
@@ -34,4 +34,4 @@
         </div>
     </section>
 </main>
-<jsp:include page="../_footer.jsp"/>
+<jsp:include page="../_footer.jsp"></jsp:include>

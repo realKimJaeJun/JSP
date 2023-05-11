@@ -1,12 +1,11 @@
-package kr.co.farmstory2.vo;
+package kr.co.Farmstory2.vo;
 
 public class FileVO {
-	private int fno; 
-	private int parent; 
-	private String newName; 
-	private String oriName; 
+	private int fno;
+	private int parent;
+	private String newName;
+	private String oriName;
 	private int download;
-	
 	public int getFno() {
 		return fno;
 	}
@@ -37,6 +36,4 @@ public class FileVO {
 	public void setDownload(int download) {
 		this.download = download;
 	}
-
-	
 }

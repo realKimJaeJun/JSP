@@ -40,6 +40,10 @@ public class WriteController extends HttpServlet {
 		// 파일 업로드
 		ServletContext ctx = req.getServletContext();
 		String path = ctx.getRealPath("/file");
+		File targetDir = new File(path);
+		if(!targetDir.exists()) {
+			targetDir.mkdirs();
+		}
 		
 		MultipartRequest mr = service.uploadFile(req, path);
 		

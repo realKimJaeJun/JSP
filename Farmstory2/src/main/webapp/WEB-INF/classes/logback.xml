@@ -2,14 +2,14 @@
 <!DOCTYPE configuration>
 
 <configuration>
-	<property name="NAME" value="Farmstory2"/>
+	<property name="NAME" value="Jboard2"/>
 	<import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
 	<import class="ch.qos.logback.core.ConsoleAppender"/>
 
 	<!-- 콘솔 출력 -->	
 	<appender name="STDOUT" class="ConsoleAppender">
 		<encoder class="PatternLayoutEncoder">
-			<pattern>%d{yyyy-HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
 	
@@ -19,9 +19,11 @@
 		<file>/logs/${NAME}.log</file>
 		<append>true</append>
 		<encoder class="PatternLayoutEncoder">
-			<pattern>%d{yyyy-HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
-	</appender>-->
+	</appender> 
+	-->
+	
 	
 	<appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>/var/log/${NAME}/${NAME}.log</file>

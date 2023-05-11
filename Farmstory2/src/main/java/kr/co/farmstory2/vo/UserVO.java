@@ -1,7 +1,6 @@
-package kr.co.farmstory2.vo;
+package kr.co.Farmstory2.vo;
 
-public class UserVO {
-
+public class userVO {
 	private String uid;
 	private String pass;
 	private String name;
@@ -14,6 +13,11 @@ public class UserVO {
 	private String addr2;
 	private String regip;
 	private String rdate;
+	
+	@Override
+	public String toString() {
+		return uid;
+	}
 	
 	public String getUid() {
 		return uid;
@@ -87,12 +91,4 @@ public class UserVO {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
-	@Override
-	public String toString() {
-		return "UserVO [uid=" + uid + ", pass=" + pass + ", name=" + name + ", nick=" + nick + ", email=" + email
-				+ ", hp=" + hp + ", grade=" + grade + ", zip=" + zip + ", addr1=" + addr1 + ", addr2=" + addr2
-				+ ", regip=" + regip + ", rdate=" + rdate + "]";
-	}
-	
 }
